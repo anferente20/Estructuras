@@ -112,4 +112,41 @@ class Lista{
 				}
 			}
 		}
+		
+		void eliminarInicio(){
+			Nodo<T> aux = new Nodo<T>;
+			
+			if(!estaVacia()){								
+				aux = cab->sig;
+				cab = aux;
+				tam--;
+			}
+		}
+		
+		void eliminarPos(int pos){
+			if(!estaVacia()){
+				
+				int contador = 1;
+				Nodo<T> aux = new Nodo<T>;
+				aux = cab;
+				
+				while(contador<Pos){
+					if(contador == pos){
+						aux = aux->sig;    //tengo mis dudas
+						tam--;
+ 					}
+					else{
+						aux = aux->sig;
+						contador++;
+					}
+				}	
+			}
+		}	
+		bool estaVacia(Lista list){
+			if(list.cab==NULL && list.fin==NULL ){   
+				return false;
+			}
+			return true;
+		}
+	
 };
