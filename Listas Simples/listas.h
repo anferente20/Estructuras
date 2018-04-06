@@ -132,7 +132,7 @@ class Lista{
 				
 				while(contador<Pos){
 					if(contador == pos){
-						aux = aux->sig;    //tengo mis dudas
+						aux = aux->sig;    //tengo mis dudas :v
 						tam--;
  					}
 					else{
