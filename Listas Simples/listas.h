@@ -76,75 +76,60 @@ class Lista{
 			}
 		}
 		
-		//revisar
 		void modificar(T a,int Pos){
-			if(estaVacia())
-				anadirFin(a);
-			if(Pos>tam)
+			if(estaVacia()){
 				anadirCabeza(a);
+			}
 			else{
-				int contador = 1;
-				Nodo<T> *aux = new Nodo<T>;
-				aux = cab;
-				while(contador<Pos){
-					if(contador == Pos){
-						aux->x =a;
- 					}
-					else{
-						aux = aux->sig;
-						contador++;
+				if(Pos>tam)
+					anadirFin(a);
+				else{
+					Nodo<T> *aux = new Nodo<T>;
+					aux=cab;
+					for(int i=2;i<=Pos;i++){
+						aux=aux->sig;
 					}
-				}
-			}	
+					aux->x=a;
+				}	
+			}
 		}
 		
 		void eliminarFinal(){
 			if(!estaVacia()){
-				int contador = 1;
 				Nodo<T> *aux = new Nodo<T>;
-				aux = cab;
-				while(contador<= tam-1){
-				if(contador == tam){
-					delete aux->sig;
-					aux->sig = NULL;
-				}
-				else{
+				aux=cab;
+				for(int i=2;i<getTam();i++){
 					aux = aux->sig;
-						contador++;
 				}
-			}
+				fin = aux;
+				aux= aux->sig;
+				fin->sig=NULL;
+				delete aux;
+				tam--;				
 			}
 		}
 		
 		void eliminarInicio(){
-			Nodo<T> *aux = new Nodo<T>;
-			
-			if(!estaVacia()){								
+			if(!estaVacia()){	
+				Nodo<T> *aux = new Nodo<T>;							
 				aux = cab->sig;
 				cab = aux;
 				tam--;
 			}
 		}
-		//Revisar
+		
 		void eliminarPos(int pos){
-			if(!estaVacia()){
-				
-				int contador = 1;
-				Nodo<T> *aux = new Nodo<T>;
-				aux = cab;
-				
-				while(contador<pos){
-					if(contador == pos){
-						aux = aux->sig;    //tengo mis dudas :v
-						tam--;
- 					}
-					else{
-						aux = aux->sig;
-						contador++;
-					}
-				}	
+			Nodo<T> *aux = new Nodo<T>;
+			Nodo<T> *temp = new Nodo<T>;
+			aux=cab;
+			for(int i=2;i<pos;i++){
+				aux=aux->sig;
 			}
-		}	
+			temp=aux->sig;
+			aux->sig=temp->sig;
+			delete temp;			
+		}
+		
 		
 		
 		T devolverDato(int Pos){
@@ -160,5 +145,5 @@ class Lista{
 					contador++;
 				}
 			}
-		}
+}
 };

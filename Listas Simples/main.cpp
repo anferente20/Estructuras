@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
 	var.anadirCabeza(5);
 	var.anadirPos(18,4);
 	var.anadirPos(25,6);
+	var.modificar(17,4);
 	for(int i = 1;i<=var.getTam();i++){
 		cout<<var.devolverDato(i)<<" ";
 	}
