@@ -2,10 +2,10 @@ template<class T>
 struct Nodo{
 	T x;
 	Nodo<T> *sig;
-}
+};
+template<class T>
 class Lista{
-	T *cab;
-	T *fin;
+	Nodo<T> *cab,*fin;
 	int tam;
 	
 	public:
@@ -21,7 +21,7 @@ class Lista{
 		}
 		
 		void anadirFin(T a){
-			Nodo<T> b = new Nodo<T>;
+			Nodo<T> *b = new Nodo<T>;
 			b->x = a;
 			b-> sig = NULL;
 			if(estaVacia()){
@@ -33,10 +33,13 @@ class Lista{
 				fin = b;
 			}
 			tam++;
+			
 		}
-		
+		int getTam(){
+			return tam;
+		}
 		void anadirCabeza(T a){
-			Nodo<T> b = new Nodo<T>;
+			Nodo<T> *b = new Nodo<T>;
 			b->x = a;
 			b-> sig = NULL;
 			if(estaVacia()){
@@ -45,45 +48,43 @@ class Lista{
 			}
 			else{
 				b->sig = cab;
-				cab=b
+				cab=b;
 			}
 			tam++;
 		}
 		
 		void anadirPos(T a, int Pos){
-			Nodo<T> b = new Nodo<T>;
+			Nodo<T> *b = new Nodo<T>;
 			b->x = a;
 			b-> sig = NULL;
-			if(estaVacia())
-				anadirFin(T a);
-			if(Pos>tam)
-				anadirCabeza(T a);
+			if(estaVacia()){
+				anadirCabeza(a);
+			}
 			else{
-				int contador = 1;
-				Nodo<T> aux = new Nodo<T>;
-				aux = cab;
-				while(contador<Pos-1){
-					if(contador == Pos){
-						b->sig = aux->sig;
-						aux->sig = b;
- 					}
-					else{
-						aux = aux->sig;
-						contador++;
+				if(Pos>tam)
+					anadirFin(a);
+				else{
+					Nodo<T> *aux = new Nodo<T>;
+					aux=cab;
+					for(int i=2;i<Pos;i++){
+						aux=aux->sig;
 					}
-				}
+					b->sig=aux->sig;
+					aux->sig=b;
+					tam++;
+				}	
 			}
 		}
 		
-		
+		//revisar
 		void modificar(T a,int Pos){
 			if(estaVacia())
-				anadirFin(T a);
+				anadirFin(a);
 			if(Pos>tam)
-				anadirCabeza(T a);
+				anadirCabeza(a);
 			else{
 				int contador = 1;
-				Nodo<T> aux = new Nodo<T>;
+				Nodo<T> *aux = new Nodo<T>;
 				aux = cab;
 				while(contador<Pos){
 					if(contador == Pos){
@@ -98,10 +99,11 @@ class Lista{
 		}
 		
 		void eliminarFinal(){
-			int contador = 1;
-			Nodo<T> aux = new Nodo<T>;
-			aux = cab;
-			while(contador<= tam-1){
+			if(!estaVacia()){
+				int contador = 1;
+				Nodo<T> *aux = new Nodo<T>;
+				aux = cab;
+				while(contador<= tam-1){
 				if(contador == tam){
 					delete aux->sig;
 					aux->sig = NULL;
@@ -111,10 +113,11 @@ class Lista{
 						contador++;
 				}
 			}
+			}
 		}
 		
 		void eliminarInicio(){
-			Nodo<T> aux = new Nodo<T>;
+			Nodo<T> *aux = new Nodo<T>;
 			
 			if(!estaVacia()){								
 				aux = cab->sig;
@@ -122,15 +125,15 @@ class Lista{
 				tam--;
 			}
 		}
-		
+		//Revisar
 		void eliminarPos(int pos){
 			if(!estaVacia()){
 				
 				int contador = 1;
-				Nodo<T> aux = new Nodo<T>;
+				Nodo<T> *aux = new Nodo<T>;
 				aux = cab;
 				
-				while(contador<Pos){
+				while(contador<pos){
 					if(contador == pos){
 						aux = aux->sig;    //tengo mis dudas :v
 						tam--;
@@ -142,11 +145,20 @@ class Lista{
 				}	
 			}
 		}	
-		bool estaVacia(Lista list){
-			if(list.cab==NULL && list.fin==NULL ){   
-				return false;
+		
+		
+		T devolverDato(int Pos){
+			int contador = 1;
+			Nodo<T> *aux = new Nodo<T>;
+			aux = cab;
+			while(contador<= Pos){
+				if(contador == Pos){
+					return aux->x;
+				}
+				else{
+					aux = aux->sig;
+					contador++;
+				}
 			}
-			return true;
 		}
-	
 };
