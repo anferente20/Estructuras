@@ -127,7 +127,8 @@ class Lista{
 			}
 			temp=aux->sig;
 			aux->sig=temp->sig;
-			delete temp;			
+			delete temp;
+			tam--;			
 		}
 		
 		
