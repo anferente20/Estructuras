@@ -119,16 +119,21 @@ class Lista{
 		}
 		
 		void eliminarPos(int pos){
-			Nodo<T> *aux = new Nodo<T>;
-			Nodo<T> *temp = new Nodo<T>;
-			aux=cab;
-			for(int i=2;i<pos;i++){
-				aux=aux->sig;
+			if(pos>tam || pos==tam){
+				eliminarFinal();
+			}else{
+				Nodo<T> *aux = new Nodo<T>;
+				Nodo<T> *temp = new Nodo<T>;
+				aux=cab;
+				for(int i=2;i<pos;i++){
+					aux=aux->sig;
+				}
+				temp=aux->sig;
+				aux->sig=temp->sig;
+				delete temp;
+				tam--;
 			}
-			temp=aux->sig;
-			aux->sig=temp->sig;
-			delete temp;
-			tam--;			
+						
 		}
 		
 		

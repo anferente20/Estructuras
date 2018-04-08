@@ -1,8 +1,26 @@
 #include <iostream>
 #include "listas.h"
 
+struct complejo{
+		float real;
+		float imaginario;
+		complejo() { 
+			real=0;
+			imaginario = 0; 
+		}	
+	    complejo(float r, float i) { 
+			real=r; 
+			imaginario = i; 
+		}
+	    complejo(float r) { 
+			real=r; 
+			imaginario = 0; 
+		}
+		
+	};
 using namespace std;
 int main(int argc, char** argv) {
+	//Lo primero que hicimos :v
 	Lista<int> var;
 	var.anadirCabeza(10);
 	var.anadirFin(120);
@@ -20,7 +38,7 @@ int main(int argc, char** argv) {
 	for(int i = 1;i<var.getTam();i++){
 		cout<<var.devolverDato(i)<<" ";
 	}
-
+	cout<<endl;
 	
 	//Lista Flotantes 
 	Lista<float> flot;
@@ -49,11 +67,57 @@ int main(int argc, char** argv) {
 	car.anadirPos('I',6);
 	car.eliminarFinal();
 	car.anadirFin('!');
-	for(int i = 1;i<=flot.getTam();i++){
+	for(int i = 1;i<=car.getTam();i++){
 		cout<<car.devolverDato(i)<<" ";
 	}
 	cout<<endl;
 	
+	//Lista de enteros
+	Lista<int> ent;
+	ent.anadirCabeza(15);
+	ent.anadirFin(0);
+	ent.anadirPos(78,6);
+	ent.eliminarPos(3);
+	ent.anadirCabeza(9);
+	ent.anadirPos(65,2);
+	ent.anadirPos(1,9);
+	ent.eliminarFinal();
+	ent.anadirFin(3);
+	for(int i = 1;i<=ent.getTam();i++){
+		cout<<ent.devolverDato(i)<<" ";
+	}
+	cout<<endl;
 	
+	//Lista de estructura en este caso complejos
+	complejo z;
+	Lista<complejo> com;
+	z.real=5;
+	z.imaginario=6;
+	com.anadirCabeza(z);
+	z.real=9;
+	z.imaginario=2;
+	com.anadirFin(z);
+	z.real=4.3;
+	z.imaginario=0;
+	com.anadirPos(z, 4);
+
+	com.eliminarPos(9);
+	z.real=9.2;
+	z.imaginario=7;
+	com.anadirCabeza(z);
+	z.real=65;
+	z.imaginario=0;
+	com.anadirPos(z, 2);
+	z.real=8;
+	z.imaginario=6;
+	com.anadirPos(z, 9);
+	
+	com.eliminarFinal();
+	z.real=3;
+	z.imaginario=4;
+	com.anadirFin(z);
+	for(int i = 1;i<=com.getTam();i++){
+		cout<<com.devolverDato(i).real<<"+"<<com.devolverDato(i).imaginario<<"i  ";
+	}
 return 0;
 }
