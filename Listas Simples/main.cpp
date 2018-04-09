@@ -1,5 +1,7 @@
 #include <iostream>
 #include "listas.h"
+#include "listas_ordenadas.h"
+
 
 struct complejo{
 		float real;
@@ -119,5 +121,22 @@ int main(int argc, char** argv) {
 	for(int i = 1;i<=com.getTam();i++){
 		cout<<com.devolverDato(i).real<<"+"<<com.devolverDato(i).imaginario<<"i  ";
 	}
+	system ("cls");
+	/**
+	Lista ordenada de enteros
+	**/
+	
+	Lista_ordenada enteros;
+	elemento *estudiante = new elemento();
+	estudiante->x  = 20161020058;
+	estudiante->info  = "Andres";
+	enteros.insertar(estudiante);
+	estudiante->x = 20161020031;
+	estudiante->info = "Sebastian";
+	enteros.insertar(estudiante);
+	for(int i = 1;i<=enteros.getTam();i++){
+		cout<<enteros.devolverDato(i)->info<<" "<<enteros.devolverDato(i)->x<<endl;
+	}
+	cout<<endl;
 return 0;
 }

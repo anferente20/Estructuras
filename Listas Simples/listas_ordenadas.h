@@ -1,16 +1,19 @@
-#include <string>
-template<class T>
-struct Nodo{
-	T x;
-	Nodo<T> *sig;
+/**
+Listas Ordenadas
+**/
+using namespace std;
+struct elemento{
+	long long x;
+	string info;
+	elemento *sig;	
 };
-template<class T>
-class Lista{
-	Nodo<T> *cab,*fin;
-	int tam;
+
+class Lista_ordenada{
+		elemento *cab,*fin;
+		int tam;
 	
 	public:
-		Lista(){
+		Lista_ordenada(){
 			cab=fin=NULL;
 			tam=0;
 		}
@@ -21,9 +24,10 @@ class Lista{
 				return false;
 		}
 		
-		void anadirFin(T a){
-			Nodo<T> *b = new Nodo<T>;
-			b->x = a;
+		void anadirFin(elemento *a){
+			elemento *b = new elemento;
+			b->x = a->x;
+			b->info=a->info;
 			b-> sig = NULL;
 			if(estaVacia()){
 				cab = b;
@@ -39,9 +43,10 @@ class Lista{
 		int getTam(){
 			return tam;
 		}
-		void anadirCabeza(T a){
-			Nodo<T> *b = new Nodo<T>;
-			b->x = a;
+		void anadirCabeza(elemento *a){
+			elemento *b = new elemento;
+			b->x = a->x;
+			b->info=a->info;
 			b-> sig = NULL;
 			if(estaVacia()){
 				cab = b;
@@ -54,21 +59,26 @@ class Lista{
 			tam++;
 		}
 		
-		void anadirPos(T a, int Pos){
-			Nodo<T> *b = new Nodo<T>;
-			b->x = a;
+		void insertar(elemento *a){
+			elemento *b = new elemento;
+			b->x = a->x;
+			b->info=a->info;
 			b-> sig = NULL;
-			if(estaVacia()){
+			if(estaVacia() || b->x < cab->x){
 				anadirCabeza(a);
 			}
 			else{
-				if(Pos>tam)
+				if(b->x > fin->x)
 					anadirFin(a);
 				else{
-					Nodo<T> *aux = new Nodo<T>;
+					elemento *aux = new elemento;
 					aux=cab;
-					for(int i=2;i<Pos;i++){
-						aux=aux->sig;
+					for(int i=2;i<tam;i++){
+						if(b->x < aux->x){
+							aux=aux->sig;								
+						}else{
+							break;
+						}						
 					}
 					b->sig=aux->sig;
 					aux->sig=b;
@@ -77,7 +87,7 @@ class Lista{
 			}
 		}
 		
-		void modificar(T a,int Pos){
+		void cambiar(elemento *a,int Pos){
 			if(estaVacia()){
 				anadirCabeza(a);
 			}
@@ -85,19 +95,24 @@ class Lista{
 				if(Pos>tam)
 					anadirFin(a);
 				else{
-					Nodo<T> *aux = new Nodo<T>;
+					elemento *aux = new elemento;
 					aux=cab;
 					for(int i=2;i<=Pos;i++){
-						aux=aux->sig;
+						if(a->x < aux->x){
+							aux=aux->sig;								
+						}else{
+							break;
+						}
 					}
-					aux->x=a;
+					
+					aux->info=a->info;
 				}	
 			}
 		}
 		
 		void eliminarFinal(){
 			if(!estaVacia()){
-				Nodo<T> *aux = new Nodo<T>;
+				elemento *aux = new elemento;
 				aux=cab;
 				for(int i=2;i<getTam();i++){
 					aux = aux->sig;
@@ -112,19 +127,19 @@ class Lista{
 		
 		void eliminarInicio(){
 			if(!estaVacia()){	
-				Nodo<T> *aux = new Nodo<T>;							
+				elemento *aux = new elemento;							
 				aux = cab->sig;
 				cab = aux;
 				tam--;
 			}
 		}
 		
-		void eliminarPos(int pos){
+		void eliminar(int pos){
 			if(pos>tam || pos==tam){
 				eliminarFinal();
 			}else{
-				Nodo<T> *aux = new Nodo<T>;
-				Nodo<T> *temp = new Nodo<T>;
+				elemento *aux = new elemento;
+				elemento *temp = new elemento;
 				aux=cab;
 				for(int i=2;i<pos;i++){
 					aux=aux->sig;
@@ -138,21 +153,22 @@ class Lista{
 		}
 		
 		
-		
-		T devolverDato(int Pos){
+		 elemento* devolverDato(int Pos){
 			int contador = 1;
-			Nodo<T> *aux = new Nodo<T>;
+			elemento *aux = new elemento;
 			aux = cab;
 			while(contador<= Pos){
 				if(contador == Pos){
-					return aux->x;
+					return aux;
 				}
 				else{
 					aux = aux->sig;
 					contador++;
 				}
 			}
-}
+		}
+		
+		string buscar(long long codigo){
+			
+		}
 };
-
-
