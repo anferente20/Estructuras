@@ -1,3 +1,4 @@
+#include <string>
 /**
 Listas Ordenadas
 **/
@@ -7,14 +8,22 @@ struct elemento{
 	string info;
 	elemento *sig;	
 };
-
+using namespace std;
 class Lista_ordenada{
-		elemento *cab,*fin;
+		elemento *cab,*fin, *cabcen, *fincen;
 		int tam;
 	
 	public:
 		Lista_ordenada(){
-			cab=fin=NULL;
+			//nuevo
+			cab = new elemento;
+			fin = new elemento;
+			cabcen = new elemento;      //centinela para la cabeza
+			fincen = new elemento; 	 //centinela para el fin
+			//nuevo
+			cab=cabcen;			
+			cabcen->sig = fincen;
+			fin=fincen;
 			tam=0;
 		}
 		bool estaVacia(){
@@ -54,36 +63,42 @@ class Lista_ordenada{
 			}
 			else{
 				b->sig = cab;
-				cab=b;
+				cab = b;
 			}
 			tam++;
 		}
 		
 		void insertar(elemento *a){
+			elemento *actual, *siguiente;
 			elemento *b = new elemento;
 			b->x = a->x;
-			b->info=a->info;
-			b-> sig = NULL;
-			if(estaVacia() || b->x < cab->x){
-				anadirCabeza(a);
+			b->info = a->info;
+			b->sig = NULL;
+			
+			if(estaVacia()){
+				cout<<"carajos no carga";	
+				//anadirCabeza(a);
+				cabcen->sig=b;												
+				b->sig = fincen;				
+				
 			}
-			else{
-				if(b->x > fin->x)
-					anadirFin(a);
-				else{
-					elemento *aux = new elemento;
-					aux=cab;
-					for(int i=2;i<tam;i++){
-						if(b->x < aux->x){
-							aux=aux->sig;								
-						}else{
-							break;
-						}						
-					}
-					b->sig=aux->sig;
-					aux->sig=b;
-					tam++;
-				}	
+			else{				
+				actual = cab;								
+				siguiente = cab->sig;												
+				for(int i=0 ; i<=tam; i++){										
+					if(b->x<siguiente->x || siguiente==fincen){						
+						
+						b->sig=siguiente;												
+						actual->sig=b;											
+						break; 
+					}else{						
+						
+						actual = siguiente;						
+						siguiente = siguiente->sig;
+					}						
+				}
+				
+				tam++;		
 			}
 		}
 		
@@ -153,10 +168,10 @@ class Lista_ordenada{
 		}
 		
 		
-		 elemento* devolverDato(int Pos){
+		elemento* devolverDato(int Pos){
 			int contador = 1;
 			elemento *aux = new elemento;
-			aux = cab;
+			aux = cabcen;
 			while(contador<= Pos){
 				if(contador == Pos){
 					return aux;

@@ -131,10 +131,10 @@ int main(int argc, char** argv) {
 	estudiante->x  = 20161020058;
 	estudiante->info  = "Andres";
 	enteros.insertar(estudiante);
-	estudiante->x = 20161020031;
-	estudiante->info = "Sebastian";
-	enteros.insertar(estudiante);
-	for(int i = 1;i<=enteros.getTam();i++){
+//	estudiante->x = 20161020031;
+//	estudiante->info = "Sebastian";
+//	enteros.insertar(estudiante);
+	for(int i = 0;i<=enteros.getTam();i++){
 		cout<<enteros.devolverDato(i)->info<<" "<<enteros.devolverDato(i)->x<<endl;
 	}
 	cout<<endl;
