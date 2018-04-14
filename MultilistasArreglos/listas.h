@@ -41,17 +41,15 @@ class Lista{
 			return tam;
 		}
 		void anadirCabeza(T a){
-			cout<<"Sigeu bien"<<endl;
+			
 			Nodo<T> *b = new Nodo<T>;
 			b->x = a;
 			b-> sig = NULL;
 			if(estaVacia()){
 				cab = b;
-				fin = b;
-				cout<<"sirve"<<endl;
+				fin = b;	
 			}
 			else{
-				cout<<"LLOREMOS";
 				b->sig = cab;
 				cab=b;
 			}
