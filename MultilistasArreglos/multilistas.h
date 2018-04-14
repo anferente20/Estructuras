@@ -8,7 +8,7 @@ struct estudiante{
 	string hobby;
 	int edad;
 	
-	int sigN,sigC,sigH,sigE;	
+	int sigN = 0,sigC = 0 ,sigH = 0 ,sigE = 0;	
 };
 
 class multilista{
@@ -85,21 +85,15 @@ class multilista{
 				aux = est[i];
 				pos=aux->sigH;
 				if(aux->hobby.compare(e->hobby)==0){
-					while(pos!=0 && pos<=tam){
-						aux = est[aux->sigH];
-						pos = aux->sigH;
-					}
-					aux->sigH = tam+1;
 					si = true;
-					cout << "hobby" << endl;
+					e->sigH = i;
+					anadirIH(e); 					
 					break;
 				}
 			}
 			if(si == false){
 				anadirIH(e);
-				cout << "Cabeza hobby" << endl;
 			}
-			
 		}
 		void anadirIH(estudiante *e){
 			if(e->hobby.compare("Danza")==0){
@@ -114,6 +108,7 @@ class multilista{
 			if(e->hobby.compare("Beisbol")==0){
 				cab[9] = e;
 			}
+				
 		}
 		
 		void anadirIC(estudiante *e){
@@ -145,6 +140,7 @@ class multilista{
 			}
 			if(carrera.compare("Sistemas")==0){
 				aux=cab[4];
+				cout<<aux->sigC<<endl;
 				aux1.anadirCabeza(cab[4]);
 			}
 			if(carrera.compare("Industrial")==0){
@@ -163,24 +159,25 @@ class multilista{
 		Lista<estudiante*> mostrarH(string hobby){
 			Lista<estudiante*> aux1 ;
 			estudiante *aux;
-			int pos=-1;
+			int pos;
 			if(hobby.compare("Danza")==0){
 				aux=cab[6];
-				aux1.anadirCabeza(cab[6]);
+				aux1.anadirCabeza(aux);
 			}
 			if(hobby.compare("Natacion")==0){
 				aux=cab[7];
-				aux1.anadirCabeza(cab[7]);
+				aux1.anadirCabeza(aux);
+				
 			}
 			if(hobby.compare("Basquet")==0){
 				aux=cab[8];
-				aux1.anadirCabeza(cab[8]);
+				aux1.anadirCabeza(aux);
 			}
 			if(hobby.compare("Beisbol")==0){
 				aux=cab[9];
-				aux1.anadirCabeza(cab[9]);
+				aux1.anadirCabeza(aux);
 			}
-			
+			pos =  aux->sigH;
 			while(pos!=0){
 				aux = est[aux->sigH];
 				pos = aux->sigH;
@@ -188,4 +185,6 @@ class multilista{
 			}
 			return aux1;
 		}
+		
+	
 };
