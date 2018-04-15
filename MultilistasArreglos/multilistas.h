@@ -1,9 +1,10 @@
 #include "string"
+#include<cstring>
 #include "listas.h"
 #include <iostream>
 using namespace std;
 struct estudiante{
-	string nombre;
+	char nombre[8] ;
 	string carrera;
 	string hobby;
 	int edad;
@@ -38,8 +39,7 @@ class multilista{
 			if(estaLlena()){
 				insertarC(e);
 				insertarH(e);
-				
-				insertarE(e);
+				insertarN(e);
 				
 				est[tam+1] = e;
 				tam++;
@@ -99,9 +99,27 @@ class multilista{
 				anadirIH(e);
 			}
 		}
-		
+		//Insertar Nombre
+		void insertarN(estudiante *e){
+			estudiante *aux = e;
+			estudiante *temp;
+			int pos;
+			if(tam == 0 ){
+				cab[1] = aux;
+			}
+			else{
+				temp = cab[1];
+				while(temp->sigN != 0){
+					if(strcmp(est[temp->sigN]->nombre,aux->nombre)==-1){
+						temp = est[temp->sigN];
+					}
+				}
+				aux->sigN = temp->sigN;
+				temp->sigN  = tam+1;	
+			}
+		}
 		//Insertar Edad
-		void insertarE(estudiante *e){
+	/**	void insertarE(estudiante *e){
 			cout<<"hola aca estoy insertando edad"<<endl;
 			estudiante *aux;
 			estudiante *aux1;
@@ -153,9 +171,9 @@ class multilista{
 			/*if(si == false){
 				e->sigE = 0;
 				cab[1] = e;			
-			}*/
+			}
 		}
-		
+		**/
 		void anadirIH(estudiante *e){
 			if(e->hobby.compare("Danza")==0){
 				cab[6] = e;
@@ -247,6 +265,15 @@ class multilista{
 			return aux1;
 		}
 		
+		Lista<estudiante*> mostrarN(){
+			Lista<estudiante*> aux1;
+			estudiante *aux = cab[1];
+			while(aux->sigN != 0){
+				aux1.anadirFin(aux);
+				aux =  est[aux->sigN];
+			}
+			return aux1;
+		}
 		Lista<estudiante*> mostrarE(){
 			Lista<estudiante*> aux1;
 			estudiante *aux;
