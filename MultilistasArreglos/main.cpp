@@ -1,4 +1,5 @@
 #include <iostream>
+#include<stdlib.h>
 #include <string.h>
 #include "multilistas.h"
 #include <windows.h>
@@ -13,7 +14,9 @@ void menu(int cualMenu){
 			cout << "3. Mostrar por orden de edad " << endl;
 			cout << "4. Mostrar por hobby " << endl;
 			cout << "5. Mostrar por carrera " << endl;
-			cout << "6. Salir " << endl;
+			cout << "6. Borrar " << endl;
+			cout << "7. Modificar " << endl;
+			cout << "8. Salir " << endl;
 			break;
 		}
 		case 4:{
@@ -33,6 +36,7 @@ void menu(int cualMenu){
 			cout << "0. Volver" << endl;
 			break;
 		}
+		
 		default:{
 			break;
 		}
@@ -88,7 +92,7 @@ void imprimir (	Lista<estudiante*> listaAImprimir){
 	estudiante *e;
 	for(int i=1; i<=listaAImprimir.getTam();i++){
 		e = listaAImprimir.devolverDato(i);
-		cout << "Persona N°:  " << i << endl;
+		cout << "Persona #:  " << i << endl;
 		cout << "Nombre: " << e->nombre <<endl;
 		cout << "Edad:  " << e->edad << endl;
 		cout << "Carrera:  " << e->carrera << endl;
@@ -113,10 +117,10 @@ int main(int argc, char** argv) {
 					
 					estudiante *e = new estudiante;	
 					nombre =  new char[BUFFER_SIZE];
-				//	cout << "Nombre: " << endl;
-					//cin >> nombre;
-				//	e->nombre = nombre;
-					cout << "Edad: " << endl;
+					cout << "Nombre: ";
+					cin >> nombre;
+					e->nombre = nombre;
+					cout << "Edad: " ;
 					cin >> opcion;
 					e->edad = opcion;
 					menu(5);
@@ -174,6 +178,7 @@ int main(int argc, char** argv) {
 					} else {
 						cout << "No hay estudiantes aun anadidos." << endl;
 					}
+					system("pause");
 					break;
 				
 				}
@@ -185,6 +190,7 @@ int main(int argc, char** argv) {
 					} else {
 						cout << "No hay estudiantes aun anadidos." << endl;
 					}
+					system("pause");
 					break;
 				}
 				case 4:{
@@ -200,7 +206,7 @@ int main(int argc, char** argv) {
 					} else {
 						cout << "No hay estudiantes aun anadidos." << endl;
 					}
-					
+					system("pause");
 					break;
 				}
 				case 5:{
@@ -216,10 +222,40 @@ int main(int argc, char** argv) {
 					} else {
 						cout << "No hay estudiantes aun anadidos." << endl;
 					}
-				
+					system("pause");
 					break;
 				}
-			}		
-		} while (opcion!=6);
-	return 0;
+				case 6:
+					cout<<"Ingrese nombre del estudiante a borrar: ";
+					nombre =  new char[BUFFER_SIZE];
+					cin>>nombre;
+					Multi.Borrar(nombre);
+					break;
+				
+				case 7:
+					cout<<"Ingrese nombre del estudiante a modificar: ";
+					char* nombre1 =  new char[BUFFER_SIZE];
+					cin>>nombre1;
+					estudiante *e = new estudiante;	
+					nombre =  new char[BUFFER_SIZE];
+					cout<<"NUEVOS DATOS:"<<endl;
+					cout << "Nombre: ";
+					cin >> nombre;
+					e->nombre = nombre;
+					cout << "Edad: " ;
+					cin >> opcion;
+					e->edad = opcion;
+					menu(5);
+					cin >> opcion;
+					e->carrera= validarCarrera(opcion);
+					menu(4);
+					cin >> opcion;
+					e->hobby = validarHobby(opcion);
+					Multi.Modificar(nombre1,e);
+					break;
+			}	
+			system("cls");	
+		} while (opcion!=8);
+return 0;
 }
+
