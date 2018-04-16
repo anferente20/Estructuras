@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
 	Multi.insertar(e);
 
 	e = new estudiante;	
-	e->nombre = "Carlos";
+	e->nombre = "Bet";
 	e->edad = 550;
 	e->carrera= "Sistemas";
 	e->hobby = "Natacion";
@@ -61,6 +61,12 @@ int main(int argc, char** argv) {
 		e = esti3.devolverDato(i);
 		cout<< e->nombre <<" "<<e->edad<<endl;
 	}
-
+	cout<<endl;
+	cout << "Prueba edad" << endl;
+	Lista<estudiante*> esti4 = Multi.mostrarE();
+	for(int i=1; i<=esti4.getTam();i++){
+		e = esti4.devolverDato(i);
+		cout<< e->nombre <<" "<<e->edad<<endl;
+	}
 	return 0;
 }
