@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include "multilistas.h"
-
+#include <windows.h>
 using namespace std;
 void menu(int cualMenu){
 	switch (cualMenu){
@@ -100,7 +100,8 @@ int main(int argc, char** argv) {
 	int opcion;
 	multilista Multi;
 	estudiante *e = new estudiante;
-	
+	const size_t BUFFER_SIZE = 1024;
+	char *nombre = new char[BUFFER_SIZE];
 	do{
 		menu(0);
 		cin >> opcion;
@@ -109,8 +110,9 @@ int main(int argc, char** argv) {
 					
 					estudiante *e = new estudiante;
 					
-				//	cout << "Nombre: " << endl;
-				//	cin >> e->nombre;
+					cout << "Nombre: " << endl;
+					cin >>nombre;
+					e->nombre = nombre;
 					cout << "Edad: " << endl;
 					cin >> opcion;
 					e->edad = opcion;
@@ -218,3 +220,6 @@ int main(int argc, char** argv) {
 		} while (opcion!=6);
 	return 0;
 }
+
+
+

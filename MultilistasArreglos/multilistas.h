@@ -38,9 +38,14 @@ class multilista{
 			if(estaLlena()){
 				insertarC(e);
 				insertarH(e);
+				cout<<est[1]->nombre<<" "<<est[1]->edad<<endl;
 				insertarN(e);
+				cout<<est[1]->nombre<<" "<<est[1]->edad<<endl;
 				insertarE(e);
+				cout<<tam<<endl;
+				cout<<est[1]->nombre<<" "<<est[1]->edad<<endl;
 				est[tam+1] = e;
+				cout<<est[2]->nombre<<" "<<est[2]->edad<<endl;
 				tam++;
 			}
 			else{				
@@ -51,7 +56,7 @@ class multilista{
 				anadirIC(e);
 				anadirIH(e);
 				insertarN(e);
-				cab[10] = e;
+				cab[9] = e;
 				est[1] = e;
 				tam++;
 			}
@@ -65,6 +70,7 @@ class multilista{
 			bool si = false;
 			int pos, i;
 			for(i = 1;i<=tam;i++){
+
 				aux = est[i];
 				pos=aux->sigC;
 				if(aux->carrera.compare(e->carrera)==0){
@@ -143,23 +149,25 @@ class multilista{
 			estudiante *aux;
 			bool si = false;
 			int pos, i;
-			
+
 			for(i = 1; i<=tam; i++){
+
 				aux = est[i];
 				pos = aux->sigE;
-				if (cab[10]==aux){ 
-					if (cab[10]->edad <= e->edad){
+				if (cab[9]==aux){ 
+					if (cab[9]->edad <= e->edad){
 						e->sigE = i;
-						cab[10] = e;
+						cab[9] = e;
 						si=true;
 						break;
 					} 
-					if (cab[10]->edad > e->edad){
-						cout << "Entra";
+					if (cab[9]->edad > e->edad){
+				
 						while (e->edad <= aux->edad && e->edad <= est[aux->sigE]->edad && aux->sigE != 0){
+
 								aux = est[aux -> sigE];
 								pos = aux -> sigE;
-								cout << "jaja: "<< pos ;	
+									
 						}	
 						e->sigE = aux->sigE;
 						aux->sigE = tam+1;						
