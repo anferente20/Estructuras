@@ -70,4 +70,4 @@ void menu(int opcion){
 		}
 	}
 	
-}
+}	
