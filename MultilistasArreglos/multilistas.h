@@ -1,10 +1,9 @@
-#include "string"
-#include<cstring>
+#include <string.h>
 #include "listas.h"
 #include <iostream>
 using namespace std;
 struct estudiante{
-	char nombre[8] ;
+	char *nombre  ;
 	string carrera;
 	string hobby;
 	int edad;
@@ -49,14 +48,16 @@ class multilista{
 				e->sigN = 0;
 				e->sigE = 0;
 				e->sigH = 0;
-				cab[1] = e;
 				anadirIC(e);
 				anadirIH(e);
+				insertarN(e);
 				est[1] = e;
 				tam++;
 			}
 		}
-		
+		int getTam(){
+			return tam;
+		}
 		//Insertar Carrera
 		void insertarC(estudiante *e){
 			estudiante *aux;
@@ -105,17 +106,35 @@ class multilista{
 			estudiante *temp;
 			int pos;
 			if(tam == 0 ){
-				cab[1] = aux;
+				cab[0] = aux;
 			}
 			else{
-				temp = cab[1];
-				while(temp->sigN != 0){
+				
+				temp = cab[0];
+				if(strcmp(cab[0]->nombre,aux->nombre)==1){
+					
+					for(int i = 1;i<=tam;i++){
+						if(strcmp(cab[0]->nombre,est[i]->nombre)==0){
+							pos = i;
+						}
+					}
+					
+					aux->sigN = pos;
+					
+					cab[0] = aux;	
+				}	
+				else{
+					while(temp->sigN != 0){
 					if(strcmp(est[temp->sigN]->nombre,aux->nombre)==-1){
 						temp = est[temp->sigN];
 					}
+					else{
+						break;
+					}
 				}
 				aux->sigN = temp->sigN;
-				temp->sigN  = tam+1;	
+				temp->sigN  = tam+1;
+				}
 			}
 		}
 		//Insertar Edad
@@ -192,16 +211,16 @@ class multilista{
 		
 		void anadirIC(estudiante *e){
 			if(e->carrera.compare("Catastral")==0){
-				cab[2] = e;
+				cab[1] = e;
 			}
 			if(e->carrera.compare("Electrica")==0){
-				cab[3]= e;
+				cab[2]= e;
 			}
 			if(e->carrera.compare("Sistemas")==0){
-				cab[4] = e;
+				cab[3] = e;
 			}
 			if(e->carrera.compare("Industrial")==0){
-				cab[5] = e;
+				cab[4] = e;
 			}
 		}
 		
@@ -210,20 +229,20 @@ class multilista{
 			estudiante *aux;
 			int pos=-1;
 			if(carrera.compare("Catastral")==0){
-				aux=cab[2];
+				aux=cab[1];
 				aux1.anadirCabeza(cab[2]);
 			}
 			if(carrera.compare("Electrica")==0){
-				aux=cab[3];
+				aux=cab[2];
 				aux1.anadirCabeza(cab[3]);
 			}
 			if(carrera.compare("Sistemas")==0){
-				aux=cab[4];
+				aux=cab[3];
 				cout<<aux->sigC<<endl;
 				aux1.anadirCabeza(cab[4]);
 			}
 			if(carrera.compare("Industrial")==0){
-				aux=cab[5];
+				aux=cab[4];
 				aux1.anadirCabeza(cab[5]);
 			}
 			
@@ -240,20 +259,20 @@ class multilista{
 			estudiante *aux;
 			int pos;
 			if(hobby.compare("Danza")==0){
-				aux=cab[6];
+				aux=cab[5];
 				aux1.anadirCabeza(aux);
 			}
 			if(hobby.compare("Natacion")==0){
-				aux=cab[7];
+				aux=cab[6];
 				aux1.anadirCabeza(aux);
 				
 			}
 			if(hobby.compare("Basquet")==0){
-				aux=cab[8];
+				aux=cab[7];
 				aux1.anadirCabeza(aux);
 			}
 			if(hobby.compare("Beisbol")==0){
-				aux=cab[9];
+				aux=cab[8];
 				aux1.anadirCabeza(aux);
 			}
 			pos =  aux->sigH;
@@ -267,10 +286,11 @@ class multilista{
 		
 		Lista<estudiante*> mostrarN(){
 			Lista<estudiante*> aux1;
-			estudiante *aux = cab[1];
+			estudiante *aux = cab[0];
+			aux1.anadirCabeza(aux);
 			while(aux->sigN != 0){
+				aux  = est[aux->sigN];
 				aux1.anadirFin(aux);
-				aux =  est[aux->sigN];
 			}
 			return aux1;
 		}
@@ -278,14 +298,14 @@ class multilista{
 			Lista<estudiante*> aux1;
 			estudiante *aux;
 			int pos=-1;
-			aux = cab[1];
+			aux = cab[9];
 			aux1.anadirCabeza(aux);
 			pos =  aux->sigE;
 			cout<<"edad: "<<aux->edad<<endl;
 			cout<<"sig: "<<aux->sigE<<endl;
 			
 			while(pos>0){
-				if(est[1]->sigE > 0){
+				if(est[9]->sigE > 0){
 					aux = est[aux->sigE+1];   // mas 1 o normal
 				}else{
 					aux = est[aux->sigE];   // mas 1 o normal

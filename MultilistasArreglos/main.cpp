@@ -7,28 +7,28 @@ int main(int argc, char** argv) {
 
 	multilista Multi;
 	estudiante *e = new estudiante;
-	e->nombre = "Godzila";
+	e->nombre =  "Ben";
 	e->edad = 1000;
 	e->carrera= "Sistemas";
 	e->hobby = "Natacion";
 	Multi.insertar(e);
 
 	e = new estudiante;	
-	e->nombre = "Godzilo";
+	e->nombre = "Carlos";
 	e->edad = 550;
 	e->carrera= "Sistemas";
 	e->hobby = "Natacion";
 	Multi.insertar(e);
-	
+
 	e = new estudiante;
-	e->nombre = "Godzilu";
+	e->nombre = "Diana";
 	e->edad = 590;
 	e->carrera= "Sistemas";
 	e->hobby = "Danza";
 	Multi.insertar(e);
 	
 	e = new estudiante;
-	e->nombre = "jhoncen";
+	e->nombre = "Ana";
 	e->edad = 900;
 	e->carrera= "Sistemas";
 	e->hobby = "Danza";
@@ -57,12 +57,9 @@ int main(int argc, char** argv) {
 	cout<<endl;
 	cout << "Prueba Nombre" << endl;
 	Lista<estudiante*> esti3 = Multi.mostrarN();
-	cout<<" "<<esti3.getTam()<<endl;
 	for(int i=1; i<=esti3.getTam();i++){
 		e = esti3.devolverDato(i);
-		cout << "Persona " << i << endl;
-		cout<< e->nombre <<endl;
-		cout<< e->edad << endl;
+		cout<< e->nombre <<" "<<e->edad<<endl;
 	}
 
 	return 0;
