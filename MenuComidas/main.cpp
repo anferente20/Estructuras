@@ -5,35 +5,8 @@
 #include "menu.h"
 
 int main(int argc, char** argv) {
-	const size_t BUFFER_SIZE = 1024;
-	char *nombre = new char[BUFFER_SIZE];
-	char *preparacion = new char[BUFFER_SIZE];
-	char *nombreI = new char[BUFFER_SIZE];
-	float cant;
-	char *medida = new char[BUFFER_SIZE];
-	cin>>nombre;
-	cin>>preparacion;
-	int val=1;
-	menu men;
-	receta *rec = new receta;
-	ingrediente *ig;
-	rec->nombre = nombre;
-	rec->preparacion = preparacion;
-	while(val == 1){
-		medida = new char[BUFFER_SIZE];
-		nombreI = new char[BUFFER_SIZE];
-		ig = new ingrediente;
-		cin>>nombreI;
-		ig->nombre=nombreI;
-		cin>>cant;
-		ig->cantidad=cant;
-		cin>>medida;
-		ig->medida = medida;
-		rec->ing.anadirFin(ig);
-		cin>>val;
-		
-	}
-	men.agregarReceta(rec);
+/*	
+	ESTO SIRVE PARA MOSTRAR RECETA
 	
 	for(int i = 1;i<=men.devolverRecetas().getTam();i++){
 		cout<<men.devolverRecetas().devolverDato(i)->nombre<<endl;
@@ -41,7 +14,58 @@ int main(int argc, char** argv) {
 			cout<<men.devolverRecetas().devolverDato(i)->ing.devolverDato(j)->nombre
 			<<endl;
 		}
-	}
+	}*/
+	
+	int opcion = 0;
+	const size_t BUFFER_SIZE = 1024;
+	char *nombre ;
+	char *preparacion ;
+	char *nombreI ;
+	float cant;
+	char *medida ;
+	int val = 1;
+	menu men;
+	receta *rec;;
+	ingrediente *ig;
+	do{
+		menu(1);
+		cin>>opcion;
+		switch(opcion){
+			case 1:
+				rec = new receta;
+				cout<<"Nombre Receta: ";
+				nombre = new char[BUFFER_SIZE];
+				preparacion = new char[BUFFER_SIZE];
+				nombreI = new char[BUFFER_SIZE];
+				medida = new char[BUFFER_SIZE];
+				cin>>nombre;
+				rec->nombre = nombre;
+				cout<<"Preparación Receta: ";
+				cin>>preparacion;
+				rec->preparacion=preparacion;
+				system("cls");
+				while(val == 1){
+					ig = new ingrediente;
+					cout<<"Nombre del ingrediente: ";
+					cin>>nombreI;
+					ig->nombre=nombreI;
+					cout<<"Cantidad disponible: ";
+					cin>>cant;
+					ig->cant=cant;
+					cout<<"Medida del ingrediente: ";
+					cin>>medida;
+					ig->medida = medida;
+					rec->ing.anadirFin(ig);
+					system("cls");
+					cout<<"¿Desea agregar otro ingrediente?"<<endl;
+					cout<<"1. Si"<<endl;
+					cout<<"2. No"<<endl;
+				}
+				men.agregarReceta(rec);
+				break;
+		}
+		
+	}while(opcion!=6)
 	return 0;
 }
 
@@ -70,4 +94,19 @@ void menu(int opcion){
 		}
 	}
 	
+}
+
+//Essta funcion sirve para el caso 4, se muestran todas las listas de recetas que hay, luego se escoge cual se quiere modificar,
+// teneiendo en cuenta el tipo de modificación
+void menuRecetas(Lista<receta*> men){
+	for(int i = 1;i<=men.getTam();i++){
+		cout<<i<<"."<<men.devolverDato(i)->nombre<<endl;
+	}
+}
+//Muestra la lista de ingredientes, en caso de que se borre o modifique un ingrediente 
+
+void menuIngrediente(List<ingrediente*> ing){
+	for(int i = 1;i<=ing.getTam();i++){
+		cout<<i<<"."<<ing.devolverDato(i)->nombre<<endl;
+	}
 }	
