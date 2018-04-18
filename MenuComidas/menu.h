@@ -54,17 +54,54 @@ class menu{
 			int posR,posI;
 			for(int i = 1;i<=meni.getTam();i++){
 				if(strcmp(nombreR, meni.devolverDato(i)->nombre)==0){
-					pos = i;
+					posR = i;
 				break;
 				}
 			}
-			receta *aux = meni.devolverDato(pos);
-			for(int i =1;i<=getTamI(aux));i++){
-				if(strcmp(nombreI, devolverIngredientes(aux)).devolverDato(i)->nombre)==0){
+			receta *aux = meni.devolverDato(posR);
+			for(int i = 1; i<=getTamI(aux);i++){
+				if(strcmp(nombreI, devolverIngredientes(aux).devolverDato(i)->nombre)==0){
 					posI = i;
 				break;
 				}
 			}
 			aux->ing.eliminarPos(posI);
+		}
+		
+		void borrarR(char *nombreR){
+			int pos, i;
+			for(i = 1;i<=meni.getTam();i++){
+				if(strcmp(nombreR, meni.devolverDato(i)->nombre)==0){
+					pos = i;
+				break;
+				}
+			}
+			meni.eliminarPos(i);
+		}
+		
+		receta* buscarReceta(char *nombre){
+			for(int i = 1;i<=meni.getTam();i++){
+				if(strcmp(nombre, meni.devolverDato(i)->nombre)==0){
+					return meni.devolverDato(i);
+					break;
+				} 
+			}
+		}
+		
+		Lista<receta*> buscarIngrediente(char *nombreI){
+			int i,j;
+			Lista<receta*> recetasPorI;
+			receta *rAux;
+			ingrediente *iAux;
+			for(i = 1;i <= meni.getTam(); i++){
+				rAux=meni.devolverDato(i);
+				for(j = 1; j <= rAux->ing.getTam();j++){
+					iAux= rAux->ing.devolverDato(j);
+					if(strcmp(nombreI, iAux->nombre)==0){
+						recetasPorI.anadirFin(rAux);
+					}
+				}
+			}
+			return recetasPorI;
 		}
 };
