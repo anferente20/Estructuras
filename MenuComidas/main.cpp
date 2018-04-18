@@ -37,10 +37,12 @@ int main(int argc, char** argv) {
 				nombre = new char[BUFFER_SIZE];
 				preparacion = new char[BUFFER_SIZE];
 				cout<<"Nombre de la receta:";
-				cin>>nombre;
+				cin.getline(nombre, BUFFER_SIZE);
+				cin.ignore(BUFFER_SIZE, '\n');
 				rec->nombre = nombre;
 				cout<<"Preparación Receta: ";
-				cin>>preparacion;
+				cin.getline(preparacion, BUFFER_SIZE);
+				cin.ignore(BUFFER_SIZE, '\n');
 				rec->preparacion = preparacion;
 				system("cls");
 				while(val == 1){
@@ -99,11 +101,9 @@ int main(int argc, char** argv) {
 				cin >> opcion;
 				cout<<"Recetas del Menu: "<<endl;
 				menuRecetasSoloNombre(men.devolverRecetas());
-				//cout << "Escriba el nombre de la receta a modificar: ";
-				//nombre = new char[BUFFER_SIZE];
-				//cin >> nombre;
+				cout << "Escriba el numero de la receta que desea cambiar. ";
 				cin>>posR;
-				rec = men.buscarReceta(posR);	
+				rec = men.buscarRecetaPos(posR);	
 
 				if(rec==NULL){
 					cout << "No se encontro la receta." << endl;
@@ -125,6 +125,7 @@ int main(int argc, char** argv) {
 					} else if (opcion==3){
 						cout << "Esta es la lista de ingredientes de la receta: " << endl;
 						menuIngredientes(rec->ing);
+						cout << "Escriba el numero para seleccionar la receta. ";
 						cin>>posI;
 						
 						ig = men.buscarIngrediente(posR,posI);
@@ -134,11 +135,11 @@ int main(int argc, char** argv) {
 						cin>>opcion;
 						switch(opcion){
 							case 1:{
-									nombre = new char[BUFFER_SIZE];
-									cout << "Escriba el nuevo nombre del ingrediente: ";
-									cin >> nombre;
-									ig->nombre = nombre;
-									men.modificarI(ig,posR,posI); 	
+								nombre = new char[BUFFER_SIZE];
+								cout << "Escriba el nuevo nombre del ingrediente: ";
+								cin >> nombre;
+								ig->nombre = nombre;
+								men.modificarI(ig,posR,posI); 	
 								
 								break;
 							}
@@ -166,10 +167,11 @@ int main(int argc, char** argv) {
 			case 5:{
 				menus(5);
 				cin >> opcion;
-				cout << "Escriba el nombre de la receta a eliminar: ";
-				nombre = new char[BUFFER_SIZE];
-				cin >> nombre;
-				rec = men.buscarReceta(nombre);	
+				cout<<"Recetas del Menu: "<<endl;
+				menuRecetasSoloNombre(men.devolverRecetas());
+				cout << "Escriba el numero de la receta que desea cambiar." << endl;
+				cin>>posR;
+				rec = men.buscarRecetaPos(posR);	
 				if (rec==NULL){
 					cout << "No se encontro la receta." << endl;
 				} else{
