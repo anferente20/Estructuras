@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
 	char *nombreI;
 	float cant;
 	char *medida;
-	int val = 1;
+	int val = 1, posR,posI;
 	
 	receta *rec;
 	ingrediente *ig;
@@ -97,10 +97,14 @@ int main(int argc, char** argv) {
 			case 4:{
 				menus(4);
 				cin >> opcion;
-				cout << "Escriba el nombre de la receta a modificar: ";
-				nombre = new char[BUFFER_SIZE];
-				cin >> nombre;
-				rec = men.buscarReceta(nombre);	
+				cout<<"Recetas del Menu: "<<endl;
+				menuRecetasSoloNombre(men.devolverRecetas());
+				//cout << "Escriba el nombre de la receta a modificar: ";
+				//nombre = new char[BUFFER_SIZE];
+				//cin >> nombre;
+				cin>>posR;
+				rec = men.buscarReceta(posR);	
+
 				if(rec==NULL){
 					cout << "No se encontro la receta." << endl;
 				} else {
@@ -108,19 +112,52 @@ int main(int argc, char** argv) {
 						nombre = new char[BUFFER_SIZE];
 						cout << "Escriba el nuevo nombre de la receta: ";
 						cin >> nombre;
-						men.modificarR(cambiarNombre(nombre,rec), rec->nombre); 	
+						rec->nombre = nombre;
+						men.modificarR(rec,posR); 	
 						
 					} else if (opcion==2){
 						preparacion = new char[BUFFER_SIZE];
 						cout << "Escriba la nueva preparacion de la receta: ";
 						cin >> preparacion;
-						men.modificarR(cambiarPrep(preparacion,rec), rec->nombre);
+						rec->preparacion = preparacion;
+						men.modificarR(rec,posR);
 						
 					} else if (opcion==3){
 						cout << "Esta es la lista de ingredientes de la receta: " << endl;
 						menuIngredientes(rec->ing);
+						cin>>posI;
 						
-											
+						ig = men.buscarIngrediente(posR,posI);
+
+						menus(6);
+						
+						cin>>opcion;
+						switch(opcion){
+							case 1:{
+									nombre = new char[BUFFER_SIZE];
+									cout << "Escriba el nuevo nombre del ingrediente: ";
+									cin >> nombre;
+									ig->nombre = nombre;
+									men.modificarI(ig,posR,posI); 	
+								
+								break;
+							}
+							case 2:{
+								cout << "Escriba la nueva cantidad del inggrediente: ";
+								cin >> cant;
+								ig->cantidad = cant;
+								men.modificarI(ig,posR,posI); 
+								break;
+							}
+							case 3:{
+								medida = new char[BUFFER_SIZE];
+								cout << "Escriba la nueva medida del ingrediente: ";
+								cin >> medida;
+								ig->medida = medida;
+								men.modificarI(ig,posR,posI);
+								break;
+							}
+						}					
 					}
 				}
 				system("pause");
@@ -137,7 +174,9 @@ int main(int argc, char** argv) {
 					cout << "No se encontro la receta." << endl;
 				} else{
 					if (opcion==1){
+						men.borrarR(nombre);
 						cout << "Receta eliminada con exito: " << endl;
+						
 							
 					} else if(opcion==2){
 						nombreI = new char[BUFFER_SIZE];
@@ -195,6 +234,12 @@ void menus(int opcion){
 			cout << "2. Eliminar ingrediente de una receta." << endl;
 			break;
 		}
+		case 6:{
+			cout<< "1. Modificar nombre."<<endl;
+			cout<< "2. Modificar cantidad." <<endl;
+			cout<< "3. Modificar medida." <<endl;
+			break;
+		}
 	}
 	
 }
@@ -219,54 +264,34 @@ void imprimirReceta(Lista<receta*> listaAImprimir){
 	ingrediente *ingred;
 	for(int i=1; i<=listaAImprimir.getTam();i++){
 		e = listaAImprimir.devolverDato(i);
-		cout << "Receta N#:  " << i << endl;
+		cout <<endl<< "Receta N#:  " << i << endl;
 		cout << "Nombre de la receta: " << e->nombre <<endl;
 		cout << "Preparacion: " << e->preparacion << endl;
 		cout << "Ingredientes: "<< endl;
 		for(int j = 1; j<=e->ing.getTam();j++){
 			ingred = e->ing.devolverDato(j);
-			cout << "<<################################>>" << endl;
+			cout <<endl<< "<<################################>>" << endl;
 			cout << "Nombre del ingrediente N# " << j << ": "<<  ingred->nombre << endl;
 			cout << "Cantidad: "<< ingred->cantidad << endl;
 			cout << "Tipo de medida: "<< ingred->medida << endl;
 		}
-		cout << "<<------------------------------>>" << endl;
+		cout <<endl<< "<<------------------------------>>" << endl;
 	}
 }
 //Imprime solo una receta
 void imprimirUnaReceta(receta *rec){
 	ingrediente *ingred;
-	cout << "<<------------------------------>>" << endl;
+	cout <<endl<< "<<------------------------------>>" << endl;
 	cout << "Nombre de la receta: " << rec->nombre <<endl;
 	cout << "Preparacion: " << rec->preparacion << endl;
 	cout << "Ingredientes: "<< endl;
 	for(int i = 1; i<=rec->ing.getTam(); i++){
 		ingred = rec->ing.devolverDato(i);
-		cout << "<<################################>>" << endl;
+		cout <<endl<< "<<################################>>" << endl;
 		cout << "Nombre del ingrediente N# " << i << ": "<<  ingred->nombre << endl;
 		cout << "Cantidad: "<< ingred->cantidad << endl;
 		cout << "Tipo de medida: "<< ingred->medida << endl;
 	}
 }
 
-receta* cambiarNombre(char *nombreN, receta* rOriginal){
-	receta *rAux = new receta;
-	rAux->nombre = nombreN;
-	rAux->preparacion = rOriginal->preparacion;
-	rAux->ing = rOriginal->ing;
-	return rAux;
-						
-}
-receta* cambiarPrep(char *prepN, receta* rOriginal){
-	receta *rAux = new receta;
-	rAux->nombre = rOriginal->nombre;
-	rAux->preparacion = prepN;
-	rAux->ing = rOriginal->ing;
-	return rAux;
-}
-void cambiarIng(){
-	
-}
 
-
-	

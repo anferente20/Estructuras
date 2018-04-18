@@ -31,17 +31,15 @@ class menu{
 			return meni;
 		}
 		
-		void modificarR(receta *recipe, char *nombre){
-			int pos;
-			for(int i = 1;i<=meni.getTam();i++){
-				if(strcmp(nombre, meni.devolverDato(i)->nombre)==0){
-					pos = i;
-				break;
-				}
-			}
+		void modificarR(receta *recipe, int pos){
 			meni.modificar(recipe, pos);
 		}
 		
+		void modificarI(ingrediente* ingrediente, int posR, int posI){
+			receta *aux = meni.devolverDato(posR);
+			aux->ing.modificar(ingrediente, posI);
+						
+		}
 		int getTamI(receta *rec){
 			return rec->ing.getTam();
 		}
@@ -78,7 +76,7 @@ class menu{
 			}
 			meni.eliminarPos(i);
 		}
-		
+		//Busca receta por nombre
 		receta* buscarReceta(char *nombre){
 			for(int i = 1;i<=meni.getTam();i++){
 				if(strcmp(nombre, meni.devolverDato(i)->nombre)==0){
@@ -87,7 +85,10 @@ class menu{
 				} 
 			}
 		}
-		
+		//Busca Receta por posicion
+		receta* buscarReceta(int pos){
+			return meni.devolverDato(pos);
+		}
 		Lista<receta*> buscarIngrediente(char *nombreI){
 			int i,j;
 			Lista<receta*> recetasPorI;
@@ -103,5 +104,11 @@ class menu{
 				}
 			}
 			return recetasPorI;
+		}
+		
+		ingrediente* buscarIngrediente(int posR,int posI){
+			receta *aux = meni.devolverDato(posR);
+			ingrediente *temp = aux->ing.devolverDato(posI);
+			return temp;
 		}
 };
