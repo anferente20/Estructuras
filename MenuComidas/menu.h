@@ -1,17 +1,18 @@
 #include <string.h>
 #include "listas.h"
 #include <iostream>
+#include <string>
 
 using namespace std;
 struct ingrediente{
-	char *nombre;
+	string nombre;
 	float cantidad;
-	char *medida;
+	string medida;
 };
 
 struct receta{
-	char *nombre;
-	char *preparacion;
+	string nombre;
+	string preparacion;
 	Lista<ingrediente*> ing;
 };
 
@@ -48,17 +49,17 @@ class menu{
 			return rec->ing;
 		}
 		
-		void borrarI(char *nombreR,char *nombreI){
+		void borrarI(string nombreR,string nombreI){
 			int posR,posI;
 			for(int i = 1;i<=meni.getTam();i++){
-				if(strcmp(nombreR, meni.devolverDato(i)->nombre)==0){
+				if(nombreR.compare(meni.devolverDato(i)->nombre)==0){
 					posR = i;
 				break;
 				}
 			}
 			receta *aux = meni.devolverDato(posR);
 			for(int i = 1; i<=getTamI(aux);i++){
-				if(strcmp(nombreI, devolverIngredientes(aux).devolverDato(i)->nombre)==0){
+				if(nombreI.compare(devolverIngredientes(aux).devolverDato(i)->nombre)==0){
 					posI = i;
 				break;
 				}
@@ -66,10 +67,10 @@ class menu{
 			aux->ing.eliminarPos(posI);
 		}
 		
-		void borrarR(char *nombreR){
+		void borrarR(string nombreR){
 			int pos, i;
 			for(i = 1;i<=meni.getTam();i++){
-				if(strcmp(nombreR, meni.devolverDato(i)->nombre)==0){
+				if(nombreR.compare(meni.devolverDato(i)->nombre)==0){
 					pos = i;
 				break;
 				}
@@ -77,19 +78,20 @@ class menu{
 			meni.eliminarPos(i);
 		}
 		//Busca receta por nombre
-		receta* buscarReceta(char *nombre){
+		receta* buscarReceta(string nombre){
 			for(int i = 1;i<=meni.getTam();i++){
-				if(strcmp(nombre, meni.devolverDato(i)->nombre)==0){
+				if(nombre.compare(meni.devolverDato(i)->nombre)==0){
 					return meni.devolverDato(i);
 					break;
 				} 
 			}
 		}
 		//Busca Receta por posicion
-		receta* buscarReceta(int pos){
+		receta* buscarRecetaPos(int pos){
 			return meni.devolverDato(pos);
 		}
-		Lista<receta*> buscarIngrediente(char *nombreI){
+		
+		Lista<receta*> buscarIngrediente(string nombreI){
 			int i,j;
 			Lista<receta*> recetasPorI;
 			receta *rAux;
@@ -98,7 +100,7 @@ class menu{
 				rAux=meni.devolverDato(i);
 				for(j = 1; j <= rAux->ing.getTam();j++){
 					iAux= rAux->ing.devolverDato(j);
-					if(strcmp(nombreI, iAux->nombre)==0){
+					if(nombreI.compare(iAux->nombre)==0){
 						recetasPorI.anadirFin(rAux);
 					}
 				}
