@@ -142,7 +142,7 @@ int main(int argc, char** argv) {
 								break;
 							}
 							case 2:{
-								cout << "Escriba la nueva cantidad del inggrediente: ";
+								cout << "Escriba la nueva cantidad del ingrediente: ";
 								cin >> cant;
 								ig->cantidad = cant;
 								men.modificarI(ig,posR,posI); 
@@ -181,9 +181,8 @@ int main(int argc, char** argv) {
 					} else if(opcion==2){
 						cout << "Esta es la lista de ingredientes de la receta: " << endl;
 						menuIngredientes(rec->ing);
-						cout << "Escriba el nombre del ingrediente: " << endl;
-						cin.ignore();
-						getline(cin,nombreI);
+						cout << "Escriba el numero del ingrediente: " << endl;
+						cin>>posI;
 						men.borrarI(rec->nombre,nombreI);
 						cout << "Ingrediente eliminado con exito: " << endl;	
 					}
