@@ -182,8 +182,9 @@ int main(int argc, char** argv) {
 						cout << "Esta es la lista de ingredientes de la receta: " << endl;
 						menuIngredientes(rec->ing);
 						cout << "Escriba el numero del ingrediente: " << endl;
-						cin>>posI;
-						men.borrarI(rec->nombre,nombreI);
+						cin>>posI;						
+						ig = men.buscarIngrediente(posR,posI);
+						men.borrarI(rec->nombre, ig->nombre);
 						cout << "Ingrediente eliminado con exito: " << endl;	
 					}
 				}
