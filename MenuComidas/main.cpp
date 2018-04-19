@@ -1,6 +1,6 @@
 #include <iostream>
 #include<stdlib.h>
-#include <string.h>
+#include <cstring>
 #include <windows.h>
 #include "menu.h"
 
@@ -38,14 +38,13 @@ int main(int argc, char** argv) {
 				getline(cin,nombre);
 				rec->nombre = nombre;
 				cout<<"Preparación Receta: ";
-				cin.ignore();
 				getline(cin,preparacion);
 				rec->preparacion = preparacion;
+				cin.clear();
 				system("cls");
 				while(val == 1){
 					ig = new ingrediente;
 					cout<<"Nombre del ingrediente: ";
-					cin.ignore();
 					getline(cin, nombreI);
 					ig->nombre=nombreI;
 					cout<<"Cantidad: ";
@@ -55,12 +54,14 @@ int main(int argc, char** argv) {
 					cin.ignore();
 					getline(cin,medida);
 					ig->medida = medida;
+					cin.clear();
 					rec->ing.anadirFin(ig);
 					system("cls");
 					cout<<"¿Desea agregar otro ingrediente?"<<endl;
 					cout<<"1. Si"<<endl;
 					cout<<"2. No"<<endl;
 					cin >> val;
+					cin.ignore();
 				}
 				val=1;
 				men.agregarReceta(rec);
