@@ -1,225 +1,97 @@
+#include <cstdlib>
 #include <iostream>
-#include <string.h>
-#include "multilistas.h"
-#include <windows.h>
+#include <ctype.h>
+#include <iomanip>
+#include "pila.h"
+#include "cola.h"
+
 using namespace std;
-void menu(int cualMenu){
-	switch (cualMenu){
-		case 0:{
-			cout << "MENU" << endl;
-			cout << "1. Ingresar un nuevo estudiante " << endl;
-			cout << "2. Mostrar por orden de nombre " << endl;
-			cout << "3. Mostrar por orden de edad " << endl;
-			cout << "4. Mostrar por hobby " << endl;
-			cout << "5. Mostrar por carrera " << endl;
-			cout << "6. Salir " << endl;
-			break;
-		}
-		case 4:{
-			cout << "1. Danza " << endl;
-			cout << "2. Natacion " << endl;
-			cout << "3. Basquet " << endl;
-			cout << "4. Besibol" << endl;
-			cout << "0. Volver " << endl;
-			
-			break;
-		}
-		case 5:{
-			cout << "1. Catastral" << endl;
-			cout << "2. Electrica" << endl;
-			cout << "3. Sistemas" << endl;
-			cout << "4. Industrial" << endl;
-			cout << "0. Volver" << endl;
-			break;
-		}
-		default:{
-			break;
-		}
-	}
-}
-string validarCarrera(int num){
-	string carrera;
-	switch(num){
-		case 1:{
-			carrera="Catastral";
-			break;
-		}
-		case 2:{
-			carrera="Electrica";
-			break;
-		}
-		case 3:{
-			carrera="Sistemas";
-			break;
-		}
-		case 4:{
-			carrera="Industrial";
-			break;
-		}			
-	}
-	return carrera;
-}
 
-string validarHobby(int num){
-	string hobby;
-	switch(num){
-		case 1:{
-			hobby="Danza";
-			break;
+int main(int argc, char *argv[])
+{cola Cola; 
+pila Pila[3]; 
+pila opcion[3];
+ int i,j, tam, grupo=0, orden[3];
+ char x; 
+ char *posible; //en esta variable se guardan los posibles valores que puede tomar el signo escogido
+ char *lista; // acá se guarda todos los signos de la columna de la primera elección
+ int decision; // con este entero se sabe cual es la primera columa que se escogió
+ do{
+   cout<<"Escriba un mùltiplo de 3: ";
+   cin>> tam;
+   lista = new char[tam/3];// se separa memoria para lista
+   }
+ while (tam%3!=0);
+ i=1;
+ x=0;
+ cout<<x;
+ while(i<=tam && i<255)
+  { if((x==0)||(x==13)||(x==32)||(x>6&&x<11))
+        x++;
+     else 
+       {Cola.InsCola(x);
+        i++; x++;
+       }
+  }
+ cout<<"mire cuidadosamente los sìmbolos y elija uno\n";
+
+for(j=1; j<=(tam/9)+1; j++) //Cambié el limite de las veces que toca repetirlo 
+ {cout<<"  Gr1  "<<"Gr2  "<<"Gr3  "<<endl;
+  while (!Cola.ColaVacia())
+   {for (i=0; i<3; i++)
+      {x=Cola.AtenderCola();
+       cout<<setw(4)<< x;
+       Pila[i].Push(x);
+       if(j == 1){
+       	opcion[i].Push(x);//Se guardan los valores en una pila auxiliar
+       }
+       }
+    cout<<"\n"; 
+    }
+ 
+   cout<< "elija el grupo en el que quedò el sìmbolo elegido (1, 2 o 3): ";
+  cin>> grupo;
+  if(j ==1){
+  	decision = grupo;//Se guarda el valor de la primera elececcion, es decir la primera columna
+  }
+  switch(grupo){
+         case 1 : {orden[0]=1; orden[1]=0; orden[2]=2;break;}
+         case 2 : {orden[0]=0; orden[1]=1; orden[2]=2;break;}       
+         case 3 : {orden[0]=0; orden[1]=2; orden[2]=1;break;}       
+                }
+  for (i=0; i<3; i++)
+    {while (!Pila[orden[i]].PilaVacia())
+        {Cola.InsCola(Pila[orden[i]].Pop());}
+    }
+  }
+
+j=tam-tam/2;
+
+if(tam % 2 ==0){ //En caso de ser un número par  se trata diferente
+	for (i=1; i<=j; i++)
+   {x=Cola.AtenderCola();}
+   posible = new char[2];// como son dos posibles opciones necesitamos dos espacios para guardarlas
+   posible[0] = x;//se guarda la de la mitad
+   x =Cola.AtenderCola();
+   posible[1]=x;// se guarda la siguiente a la mitad
+   for( i = 0;i<tam/3;i++){
+   	lista[i] = opcion[decision-1].Pop();//se llena la lista con los signos de la columna de la primera decision
+   }
+   
+   //Se realizan las validaciones de los signos 
+   for(i = 0;i<tam/3;i++){
+		for(j = 0;j<2;j++){
+			if(posible[j]==lista[i]){
+				x = posible[j];
+			}
 		}
-		case 2:{
-			hobby="Natacion";
-			break;
-		}
-		case 3:{
-			hobby="Basquet";
-			break;
-		}
-		case 4:{
-			hobby="Beisbol";
-			break;
-		}			
-	}
-	return hobby;
+   }
+}else{
+	for (i=1; i<=j; i++)
+   {x=Cola.AtenderCola();}
 }
-
-void imprimir (	Lista<estudiante*> listaAImprimir){
-	estudiante *e;
-	for(int i=1; i<=listaAImprimir.getTam();i++){
-		e = listaAImprimir.devolverDato(i);
-		cout << "Persona N°:  " << i << endl;
-		cout << "Nombre: " << e->nombre <<endl;
-		cout << "Edad:  " << e->edad << endl;
-		cout << "Carrera:  " << e->carrera << endl;
-		cout << "Hobby:  " << e->hobby << endl;
-		cout << "<<------------------------------>>" << endl;
-	}
+cout<<"La figura elegida es: "<< x<<endl; 
+    system("PAUSE");
+    return EXIT_SUCCESS;
 }
-
-int main(int argc, char** argv) {	
-	int opcion;
-	multilista Multi;
-	estudiante *e = new estudiante;
-	const size_t BUFFER_SIZE = 1024;
-	char *nombre = new char[BUFFER_SIZE];
-	do{
-		menu(0);
-		cin >> opcion;
-			switch(opcion){
-				case 1:{
-					
-					estudiante *e = new estudiante;
-					
-					cout << "Nombre: " << endl;
-					cin >>nombre;
-					e->nombre = nombre;
-					cout << "Edad: " << endl;
-					cin >> opcion;
-					e->edad = opcion;
-					menu(5);
-					cin >> opcion;
-					e->carrera= validarCarrera(opcion);
-					menu(4);
-					cin >> opcion;
-					e->hobby = validarHobby(opcion);
-					
-					Multi.insertar(e);
-				/*
-					e = new estudiante;	
-					e->nombre = "Godzilo";
-					e->edad = 500;
-					e->carrera= "Sistemas";
-					e->hobby = "Natacion";
-					Multi.insertar(e);
-					
-					e = new estudiante;
-					e->nombre = "Godzilu";
-					e->edad = 520;
-					e->carrera= "Sistemas";
-					e->hobby = "Danza";
-					Multi.insertar(e);
-					
-					e = new estudiante;
-					e->nombre = "jhoncena";
-					e->edad = 1200;
-					e->carrera= "Sistemas";
-					e->hobby = "Danza";
-					Multi.insertar(e);
-					
-					e = new estudiante;
-					e->nombre = "jhoncena2";
-					e->edad = 700;
-					e->carrera= "Sistemas";
-					e->hobby = "Danza";
-					Multi.insertar(e);
-					
-					e = new estudiante;
-					e->nombre = "jhoncena3";
-					e->edad = 10000;
-					e->carrera= "Sistemas";
-					e->hobby = "Danza";
-					Multi.insertar(e);
-					
-					*/
-					break;
-				}
-				case 2:{
-					if (Multi.getTam()!=0){
-						cout<<endl;
-						cout << "NOMBRE" << endl;
-						imprimir(Multi.mostrarN());	
-					} else {
-						cout << "No hay estudiantes aun anadidos." << endl;
-					}
-					break;
-				
-				}
-				case 3:{
-					if (Multi.getTam()!=0){
-						cout<<endl;
-						cout << "EDAD" << endl;
-						imprimir(Multi.mostrarE());	
-					} else {
-						cout << "No hay estudiantes aun anadidos." << endl;
-					}
-					break;
-				}
-				case 4:{
-					menu(4);
-					cin >> opcion;
-					if (Multi.getTam()!=0){
-						cout << "HOBBY" << endl;
-						if (opcion<=4 && opcion>0){
-							imprimir(Multi.mostrarH(validarHobby(opcion)));
-						} else {
-							menu(0);
-						}	
-					} else {
-						cout << "No hay estudiantes aun anadidos." << endl;
-					}
-					
-					break;
-				}
-				case 5:{
-					menu(5);
-					if (Multi.getTam()!=0){
-						cin >> opcion;
-						cout << "CARRERA" << endl;
-						if (opcion<=4 && opcion>0){
-							imprimir(Multi.mostrarC(validarCarrera(opcion)));
-						} else {
-						menu(0);
-						}		
-					} else {
-						cout << "No hay estudiantes aun anadidos." << endl;
-					}
-				
-					break;
-				}
-			}		
-		} while (opcion!=6);
-	return 0;
-}
-
-
 
