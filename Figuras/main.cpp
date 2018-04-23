@@ -13,6 +13,7 @@ pila Pila[3];
 pila opcion[3];
  int i,j, tam, grupo=0, orden[3];
  char x; 
+ int aux;
  char *posible; //en esta variable se guardan los posibles valores que puede tomar el signo escogido
  char *lista; // acá se guarda todos los signos de la columna de la primera elección
  int decision; // con este entero se sabe cual es la primera columa que se escogió
@@ -34,8 +35,14 @@ pila opcion[3];
        }
   }
  cout<<"mire cuidadosamente los sìmbolos y elija uno\n";
+if( tam>=9){
+	aux = (tam/3)-2;
+}
+else{
+	aux = tam /3;
+}
+for(j=1; j<=aux; j++) //Cambié el limite de las veces que toca repetirlo 24
 
-for(j=1; j<=(tam/9)+1; j++) //Cambié el limite de las veces que toca repetirlo 
  {cout<<"  Gr1  "<<"Gr2  "<<"Gr3  "<<endl;
   while (!Cola.ColaVacia())
    {for (i=0; i<3; i++)
