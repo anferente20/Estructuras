@@ -87,8 +87,6 @@ class arbol{
 			for(j=1; j<=tam; j++){
 				auxiliar.anadirFin(arregloInfo[j]->info);
 			} 
-		}
-
-	
-		
+			return auxiliar;
+		}		
 };
