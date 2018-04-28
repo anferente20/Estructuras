@@ -13,12 +13,12 @@ int main(int argc, char** argv) {
 	arbol.insertarElemento(75);
 	arbol.insertarElemento(125);
 	arbol.insertarElemento(170);
-//	arbol.insertarElemento(10);
-//	arbol.insertarElemento(60);
-//	arbol.insertarElemento(90);
-//	arbol.insertarElemento(180);
-//	arbol.insertarElemento(140);
-//	arbol.insertarElemento(160);
-	arbol.mostrarInfo();
+	arbol.insertarElemento(10);
+	arbol.insertarElemento(60);
+	arbol.insertarElemento(90);
+	arbol.insertarElemento(180);
+	arbol.insertarElemento(140);
+	arbol.insertarElemento(160);
+	arbol.mostrarInfo(); 		///ESTO ES SOLO PARA PRUEBAS :v
 	return 0;
 }

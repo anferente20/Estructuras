@@ -10,13 +10,14 @@ class arbolBin{
 	public:
 		
 		arbolBin(){
-			arbolitoBin[0].clave = 0;
-			arbolitoBin[0].hijoIzq = 1; 									//Se refiere a la cabeza
-			for (int i=0; i<13; i++){									//Inicializa los hijos derechos como la posición del elemento siguiente
+			for (int i=0; i<13; i++){										//Inicializa los hijos derechos como la posición del elemento siguiente
 				arbolitoBin[i].hijoDer = i+1;
 				arbolitoBin[i].clave = 0;
+				arbolitoBin[i].hijoIzq = 0;
 			}
-			arbolitoBin[13].hijoDer = 0;
+			arbolitoBin[0].clave = 0;
+			arbolitoBin[0].hijoIzq = 1; 									//Se refiere a la cabeza
+			arbolitoBin[13].hijoDer = 0;									
 		}
 		void insertarRaiz(int numero){							
 			arbolitoBin[0].hijoDer = arbolitoBin[1].hijoDer;							
@@ -32,23 +33,19 @@ class arbolBin{
 			arbolitoBin[auxNum].clave = numero;
 			arbolitoBin[auxNum].hijoDer = 0;
 			arbolitoBin[auxNum].hijoIzq = 0;
-	
-			while (pos!=0){
+			while(pos!=0){
 				posAnt=pos;
-				arbolitoBin[pos];
-				if (arbolitoBin[auxNum].clave > (arbolitoBin[pos].clave)){
-					pos = arbolitoBin[pos].hijoDer;	
+				if (numero >  arbolitoBin[posAnt].clave){
+					pos = arbolitoBin[posAnt].hijoDer;
+				} else {
+					pos = arbolitoBin[posAnt].hijoIzq;
 				}
-				if (arbolitoBin[auxNum].clave < (arbolitoBin[pos].clave)){
-					pos = arbolitoBin[pos].hijoIzq;	
-				}
-				
 			}
 			if (arbolitoBin[auxNum].clave > (arbolitoBin[posAnt].clave)){
 				arbolitoBin[posAnt].hijoDer = auxNum;
 			} else {
 				arbolitoBin[posAnt].hijoIzq = auxNum;
-			}
+			}	
 		}
 		
 		void mostrarInfo(){
