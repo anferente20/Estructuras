@@ -5,7 +5,7 @@ using namespace std;
 int main(int argc, char** argv) {
 	int numero;
 	arbolBin arbol;
-
+	Lista<int> orden;
 	arbol.insertarRaiz(100);
 	arbol.insertarElemento(150);
 	arbol.insertarElemento(50);
@@ -19,6 +19,6 @@ int main(int argc, char** argv) {
 	arbol.insertarElemento(180);
 	arbol.insertarElemento(140);
 	arbol.insertarElemento(160);
-	arbol.mostrarInfo(); 		///ESTO ES SOLO PARA PRUEBAS :v
+	arbol.inorden(1);
 	return 0;
 }

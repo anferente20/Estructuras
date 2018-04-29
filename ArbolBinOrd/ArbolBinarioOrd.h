@@ -1,4 +1,5 @@
 #include <iostream>
+#include"listas.h"
 using namespace std;
 struct arbolito{
 	int clave;
@@ -7,6 +8,7 @@ struct arbolito{
 };
 class arbolBin{
 	arbolito arbolitoBin[13];
+	Lista<int> in;
 	public:
 		
 		arbolBin(){
@@ -57,4 +59,19 @@ class arbolBin{
 				cout << "----------------------------------" << endl;
 			}
 		}
+		
+		void inorden(int raiz){
+			int ayuda ;
+			int izq = arbolitoBin[raiz].hijoIzq;
+			int der = arbolitoBin[raiz].hijoDer;
+			if(izq != 0){
+				inorden(arbolitoBin[raiz].hijoIzq);
+			}
+			ayuda = arbolitoBin[raiz].clave;
+			cout<<ayuda<<" ";
+			if(der !=0){
+				inorden(arbolitoBin[raiz].hijoDer);
+			}		
+		}	
+		
 };
