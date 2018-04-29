@@ -19,6 +19,31 @@ int main(int argc, char** argv) {
 	arbol.insertarElemento(180);
 	arbol.insertarElemento(140);
 	arbol.insertarElemento(160);
-	arbol.inorden(1);
+	arbol.mostrarInfo();
+	
+	
+	arbol.inorden(1);     
+	orden = arbol.getin();		
+	//mostrando recorrido inorden
+	int i;
+	for(i=1; i<=orden.getTam(); i++){
+		cout<<orden.devolverDato(i)<<" ";
+	}
+	cout<<endl;
+	
+	arbol.preorden(1);
+	orden = arbol.getpre();
+	//mostrando recorrido preorden
+	for(i=1; i<=orden.getTam(); i++){
+		cout<<orden.devolverDato(i)<<" ";
+	}
+	cout<<endl;
+	
+	arbol.posorden(1);
+	orden = arbol.getpos();
+	//mostrando recorrido posorden
+	for(i=1; i<=orden.getTam(); i++){
+		cout<<orden.devolverDato(i)<<" ";
+	}
 	return 0;
 }

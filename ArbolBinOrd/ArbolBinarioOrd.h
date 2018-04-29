@@ -7,8 +7,10 @@ struct arbolito{
 	int hijoDer;
 };
 class arbolBin{
-	arbolito arbolitoBin[13];
+	arbolito arbolitoBin[14];      //ACA LO ARREGLE ANTES ESTABA EN 13 Y AHORA 14 CON ESO SE SOLUCIONA
 	Lista<int> in;
+	Lista<int> pre;
+	Lista<int> pos;
 	public:
 		
 		arbolBin(){
@@ -61,19 +63,51 @@ class arbolBin{
 		}
 		
 		void inorden(int raiz){
-			int ayuda ;
-			int izq = arbolitoBin[raiz].hijoIzq;
-			int der = arbolitoBin[raiz].hijoDer;
-			if(izq != 0){
+		//	int ayuda ;
+		//	int izq = arbolitoBin[raiz].hijoIzq;
+		//	int der = arbolitoBin[raiz].hijoDer;
+			if(arbolitoBin[raiz].hijoIzq != 0 ){
+				
 				inorden(arbolitoBin[raiz].hijoIzq);
 			}
-			ayuda = arbolitoBin[raiz].clave;
-			cout<<arbolitoBin[13].clave<<" ";
-			in.anadirFin(ayuda);
-			
-			if(der !=0){
+		//	ayuda = arbolitoBin[raiz].clave;
+			in.anadirFin(arbolitoBin[raiz].clave);	
+		//	cout<<arbolitoBin[raiz].clave<<" ";
+				
+			if(arbolitoBin[raiz].hijoDer != 0 ){
+				
 				inorden(arbolitoBin[raiz].hijoDer);
 			}		
+		}
+		void preorden(int raiz){
+			pre.anadirFin(arbolitoBin[raiz].clave);
+			//cout<<arbolitoBin[raiz].clave<<" ";
+			if(arbolitoBin[raiz].hijoIzq != 0 ){				
+				preorden(arbolitoBin[raiz].hijoIzq);
+			}										
+			if(arbolitoBin[raiz].hijoDer != 0 ){				
+				preorden(arbolitoBin[raiz].hijoDer);
+			}	
+		}
+		void posorden(int raiz){
+						
+			if(arbolitoBin[raiz].hijoIzq != 0 ){				
+				posorden(arbolitoBin[raiz].hijoIzq);
+			}										
+			if(arbolitoBin[raiz].hijoDer != 0 ){				
+				posorden(arbolitoBin[raiz].hijoDer);
+			}	
+			pos.anadirFin(arbolitoBin[raiz].clave);
+			//cout<<arbolitoBin[raiz].clave<<" ";
 		}	
+		Lista<int> getin(){
+			return in;
+		}
+		Lista<int> getpre(){
+			return pre;
+		}	
+		Lista<int> getpos(){
+			return pos;
+		}
 		
 };
