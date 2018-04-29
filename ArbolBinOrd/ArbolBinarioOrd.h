@@ -68,7 +68,9 @@ class arbolBin{
 				inorden(arbolitoBin[raiz].hijoIzq);
 			}
 			ayuda = arbolitoBin[raiz].clave;
-			cout<<ayuda<<" ";
+			cout<<arbolitoBin[13].clave<<" ";
+			in.anadirFin(ayuda);
+			
 			if(der !=0){
 				inorden(arbolitoBin[raiz].hijoDer);
 			}		
