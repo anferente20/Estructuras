@@ -154,5 +154,11 @@ class Lista{
 					contador++;
 				}
 			}
-}
+		}
+		
+		void vaciar(){
+			while(tam != 0){
+				eliminarFinal();
+			}
+		}
 };

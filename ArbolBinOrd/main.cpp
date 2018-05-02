@@ -13,22 +13,29 @@ int main(int argc, char** argv) {
 	arbol.insertarElemento(75);
 	arbol.insertarElemento(125);
 	arbol.insertarElemento(170);
-	arbol.insertarElemento(10);
+	arbol.insertarElemento(65);
 	arbol.insertarElemento(60);
 	arbol.insertarElemento(90);
 	arbol.insertarElemento(180);
 	arbol.insertarElemento(140);
 	arbol.insertarElemento(160);
-	arbol.mostrarInfo();
-	
-	
-	arbol.inorden(1);     
+	arbol.inorden(1);
+    
 	orden = arbol.getin();		
 	//mostrando recorrido inorden
 	int i;
 	for(i=1; i<=orden.getTam(); i++){
 		cout<<orden.devolverDato(i)<<" ";
 	}
+	cout<<endl;
+	cout<<arbol.cortar(100)<<endl;
+	arbol.vaciarListas();
+	arbol.inorden(arbol.getRaiz());
+	orden = arbol.getin();
+	for(i=1; i<=orden.getTam(); i++){
+		cout<<orden.devolverDato(i)<<" ";
+	}
+	/*
 	cout<<endl;
 	
 	arbol.preorden(1);
@@ -44,6 +51,6 @@ int main(int argc, char** argv) {
 	//mostrando recorrido posorden
 	for(i=1; i<=orden.getTam(); i++){
 		cout<<orden.devolverDato(i)<<" ";
-	}
+	}*/
 	return 0;
 }
