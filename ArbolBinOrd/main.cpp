@@ -7,7 +7,7 @@ int main(int argc, char** argv) {
 	int numero, i, opcion;
 	arbolBin arbol;
 	Lista<int> orden;
-	
+	/**
 	arbol.insertarRaiz(100);
 	arbol.insertarElemento(150);
 	arbol.insertarElemento(50);
@@ -22,12 +22,12 @@ int main(int argc, char** argv) {
 	arbol.insertarElemento(140);
 	arbol.insertarElemento(160);
 	
-	
-	/*
-	menu(5); 		//Ingresa la raiz 
-	cin >> prueba;
-	arbol.anadirRaiz(prueba);
 	*/
+	
+	menu(5); 		//Ingresa la raiz 
+	cin >> numero;
+	arbol.insertarRaiz(numero);
+	
 	do{
 	menu(0);
 	cout << "> ";
@@ -53,6 +53,7 @@ int main(int argc, char** argv) {
 			break;
 		}
 		case 3:{
+			menu(3);
 			cin >> numero;
 			if (numero==1){
 				arbol.inorden(1);    
