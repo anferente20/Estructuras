@@ -72,39 +72,26 @@ class arbolBin{
 			pila pilo;
 			int aux = raiz;
 			do{
-				if(!pilo.PilaVacia() && aux == 0){
-					cout<<"añade: "<<arbolitoBin[pilo.Top()].clave<<endl;
-					in.anadirFin(arbolitoBin[pilo.Top()].clave);				
+				
+				if(!pilo.PilaVacia() && aux==0){
+					in.anadirFin(arbolitoBin[pilo.Top()].clave);
 				}
-				if(aux != 0){
-					
-					pilo.Push(aux);
-					aux = arbolitoBin[aux].hijoIzq;
-				
-				}else if(!pilo.PilaVacia()){
-					
-					aux = pilo.Top();
-					pilo.Pop();
-					
-					aux = arbolitoBin[aux].hijoDer;
-				}				
+				if(aux!= 0){
+					//	cout<<"añade: "<<arbolitoBin[aux].clave<<endl;
+						
+						//mostrar, guardar en la lista para eso 
+						pilo.Push(aux);
+						aux = arbolitoBin[aux].hijoIzq;
+					}else if(!pilo.PilaVacia()){
+						aux = pilo.Pop();
+						
+						aux = arbolitoBin[aux].hijoDer;
+					}	
 			}while(!pilo.PilaVacia() || aux != 0);	
-				
+			
+			
 		}
-		/*
-		nodo=raiz
-		hacer
-		---Si nodo != NULL //esto avanza por los hijos derechos
-		------mostrar(nodo)
-		------apilar(nodo)
-		------nodo = nodo->HijoIzq
-		---Sino si PilaNoVacia() //esto retrocede y avanza por el hijo derecho
-		------Desapilar() //desapilamos el ultimo q no sirve para nada
-		------nodo = Desapilar() //De este ya cogemos el hijo derecho
-		------nodo = nodo->HijoDer
-		mientras PilaNoVacia 
 		
-		*/
 		void preorden(int raiz){
 			pila pilo;
 			int aux = raiz;
@@ -126,22 +113,19 @@ class arbolBin{
 		void posorden(int raiz){
 			pila pilo;
 			int aux = raiz;
-			do{
-				if(aux!= 0){
-				//	cout<<"añade: "<<arbolitoBin[aux].clave<<endl;
-					
-					//mostrar, guardar en la lista para eso 
-					pilo.Push(aux);
-					aux = arbolitoBin[aux].hijoIzq;
-				}else if(!pilo.PilaVacia()){
-					aux = pilo.Pop();
-					
-					aux = arbolitoBin[aux].hijoDer;
+			while (aux != 0){
+				pilo.Push(aux);
+				aux = arbolitoBin[aux].hijoIzq;
+			}				
+			int aux2 ;
+			while (!pilo.PilaVacia()){
+				aux2 = pilo.Pop();
+				if (arbolitoBin[aux2].hijoDer != 0){
+					posorden(arbolitoBin[aux2].hijoDer);
 				}
-				if(!pilo.PilaVacia() || aux==0){
-					pos.anadirFin(arbolitoBin[aux].clave);
-				}
-			}while(!pilo.PilaVacia() && aux != 0);											
+				pos.anadirFin(arbolitoBin[aux2].clave);
+			}
+							
 		}
 		
 		Lista<int> getin(){
