@@ -3,16 +3,18 @@
 #include"listas.h"
 #include "pila.h"
 using namespace std;
+template<class T>
 struct arbolito{
-	int clave;
+	T clave;
 	int hijoIzq;
 	int hijoDer;
 };
+template<class T>
 class arbolBin{
-	arbolito arbolitoBin[14];      //ACA LO ARREGLE ANTES ESTABA EN 13 Y AHORA 14 CON ESO SE SOLUCIONA
-	Lista<int> in;
-	Lista<int> pre;
-	Lista<int> pos;
+	arbolito<T> arbolitoBin[14];      //ACA LO ARREGLE ANTES ESTABA EN 13 Y AHORA 14 CON ESO SE SOLUCIONA
+	Lista<T> in;
+	Lista<T> pre;
+	Lista<T> pos;
 	public:
 		
 		arbolBin(){
@@ -25,7 +27,7 @@ class arbolBin{
 			arbolitoBin[0].hijoIzq = 1; 									//Se refiere a la cabeza
 			arbolitoBin[13].hijoDer = 0;									
 		}
-		void insertarRaiz(int numero){							
+		void insertarRaiz(T numero){							
 			arbolitoBin[0].hijoDer = arbolitoBin[1].hijoDer;							
 			arbolitoBin[1].clave = numero;
 			arbolitoBin[1].hijoDer = 0;
@@ -33,8 +35,10 @@ class arbolBin{
 		}
 		void vaciarListas(){
 			in.vaciar();
+			pre.vaciar();
+			pos.vaciar();			
 		}
-		void insertarElemento(int numero){
+		void insertarElemento(T numero){
 			int pos = 1, posAnt=1;
 			int auxNum = arbolitoBin[0].hijoDer;
 			
@@ -69,11 +73,13 @@ class arbolBin{
 			}
 		}
 		void inorden(int raiz){
-			pila pilo;
+			cout<<"sera?";
+			pila<int> pilo;
 			int aux = raiz;
-			do{
-				
+			
+			do{				
 				if(!pilo.PilaVacia() && aux==0){
+					cout<<"esto: "<<arbolitoBin[pilo.Top()].clave<<endl;
 					in.anadirFin(arbolitoBin[pilo.Top()].clave);
 				}
 				if(aux!= 0){
@@ -83,17 +89,14 @@ class arbolBin{
 						pilo.Push(aux);
 						aux = arbolitoBin[aux].hijoIzq;
 					}else if(!pilo.PilaVacia()){
-						aux = pilo.Pop();
-						
+						aux = pilo.Pop();						
 						aux = arbolitoBin[aux].hijoDer;
 					}	
-			}while(!pilo.PilaVacia() || aux != 0);	
-			
-			
+			}while(!pilo.PilaVacia() || aux != 0);										
 		}
 		
 		void preorden(int raiz){
-			pila pilo;
+			pila<T> pilo;
 			int aux = raiz;
 			do{
 				if(aux!= 0){
@@ -111,7 +114,7 @@ class arbolBin{
 		}
 		
 		void posorden(int raiz){
-			pila pilo;
+			pila<T> pilo;
 			int aux = raiz;
 			while (aux != 0){
 				pilo.Push(aux);
@@ -125,20 +128,36 @@ class arbolBin{
 				}
 				pos.anadirFin(arbolitoBin[aux2].clave);
 			}
-							
+			/*
+			int aux2;
+			do{
+				if(aux!=0){
+					pilo.Push(aux);
+					aux = arbolitoBin[aux].hijoIzq;
+				}
+				if (!pilo.PilaVacia()){
+					aux2 = pilo.Pop();
+					if(arbolitoBin[aux2].hijoDer != 0){
+						posorden(arbolitoBin[aux].hijoDer);
+					}
+					pos.anadirFin(arbolitoBin[aux2].clave);
+					
+				}
+			}while(aux!=0 || !pilo.PilaVacia());
+			*/				
 		}
 		
-		Lista<int> getin(){
+		Lista<T> getin(){
 			return in;
 		}
-		Lista<int> getpre(){
+		Lista<T> getpre(){
 			return pre;
 		}	
-		Lista<int> getpos(){
+		Lista<T> getpos(){
 			return pos;
 		}
 		
-		void eliminar(int valor){
+		void eliminar(T valor){
 			int padre = 0;
 			int hijo = arbolitoBin[padre].hijoIzq;
 			int padre1,hijo1;
@@ -234,7 +253,7 @@ class arbolBin{
 			arbolitoBin[0].hijoDer = hijo;
 			
 		}
-		 bool pertenece(int valor){
+		 bool pertenece(T valor){
 		 	bool aux = false;
 			for(int i =1;i<in.getTam();i++){
 				if(valor == in.devolverDato(i))
@@ -243,7 +262,7 @@ class arbolBin{
 			return aux;
 		 }		
 		
-		string cortar(int valor){
+		string cortar(T valor){
 			string aux = "El elemento no pertenece al arbol.";
 			if(pertenece(valor) == true){
 				eliminar(valor);

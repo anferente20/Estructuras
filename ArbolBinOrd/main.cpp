@@ -4,9 +4,10 @@
 using namespace std;
 void menu(int opcion);
 int main(int argc, char** argv) {
-	int numero, i, opcion;
-	arbolBin arbol;
-	Lista<int> orden;
+	char numero;
+	int i, opcion;
+	arbolBin<char> arbol;
+	Lista<char> orden;
 	/**
 	arbol.insertarRaiz(100);
 	arbol.insertarElemento(150);
@@ -54,9 +55,11 @@ int main(int argc, char** argv) {
 		}
 		case 3:{
 			menu(3);
-			cin >> numero;
-			if (numero==1){
+			cin >> opcion;
+			if (opcion==1){
+				cout<<"antes";
 				arbol.inorden(1);    
+				cout<<"despues";
 				orden = arbol.getin();		
 				//mostrando recorrido inorden
 				cout<<"Mostrando recorrido inorden: "<<endl;
@@ -65,7 +68,7 @@ int main(int argc, char** argv) {
 				}
 				cout<<endl;
 			}
-			if (numero==2){
+			if (opcion==2){
 				cout<<"Mostrando recorrido preorden: "<<endl;	
 				arbol.preorden(1);
 				orden = arbol.getpre();
@@ -76,7 +79,7 @@ int main(int argc, char** argv) {
 				}
 				cout<<endl;
 			}
-			if (numero==3){
+			if (opcion==3){
 				cout<<"Mostrando recorrido posorden: "<<endl;
 				arbol.posorden(1);
 				orden = arbol.getpos();
@@ -90,6 +93,8 @@ int main(int argc, char** argv) {
 			break;
 		}
 	}	
+	//arbol.mostrarInfo();
+	arbol.vaciarListas();
 	} while (opcion!=4);
 	
 
