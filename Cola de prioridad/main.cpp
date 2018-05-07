@@ -5,12 +5,14 @@ using namespace std;
 void menu(int opcion);
 int main(int argc, char** argv) {
 	cout<<"hola"<<endl;
-	int opcion, numero, i;
-	int *cat;
+	int opcion, i;
+	int numero;
+	Lista<int> cat;
 	menu(5);
-	cin>>numero;
 	
-	colaP cola(numero);	
+	cin>>opcion;
+	
+	colaP<int> cola(opcion);	
 /*	
 	cola.agregar(60);	
 	cola.agregar(80);
@@ -39,9 +41,9 @@ int main(int argc, char** argv) {
 				cout << "Asi queda la cola luego de atender: " << endl;
 				//mostramos la cola luego de atender
 				cola.atender();
-				cat = cola.getElementos();	
-				for(i = 1 ; i<cola.getTam(); i++){
-					cout << cat[i] <<" "; 
+				cat = cola.getCola();	
+				for(i = 1 ; i<=cat.getTam(); i++){
+					cout << cat.devolverDato(i) <<" "; 
 				}	
 				cout << endl;		
 				break;
@@ -49,9 +51,10 @@ int main(int argc, char** argv) {
 			case 3:{
 				cout << "Elementos de la cola: " <<endl;
 				cout << "tam de la cola: " <<cola.getTam() << endl;
-				cat = cola.getElementos();	
-				for (int i=1; i<cola.getTam(); i++){
-					cout<<cat[i]<<" ";
+				cola.RefrescarLista();
+				cat = cola.getCola();	
+				for (int i=1; i<=cat.getTam(); i++){
+					cout<<cat.devolverDato(i)<<" ";
 				}
 				cout<<endl;
 				break;

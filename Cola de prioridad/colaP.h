@@ -1,17 +1,20 @@
+#include "listas.h"
 using namespace std;
+template<class T>
 class colaP{ int tama;
-			int *elementos;
+			T *elementos;
 			int posag=1;
+			Lista<T> cola;
 			
       public:colaP(int tam){
-                    elementos = new int[tam+1];    
+                    elementos = new T[tam+1];    
 					for(int i=0; i<tam+1; i++ ){
 						elementos[i] = 0;
 					}   
 					tama = tam+1;              
              }
              
-             void agregar(int dato){
+             void agregar(T dato){
              	int aux = 0;
              	if(elementos[1]==0){             		
              			elementos[1] = dato;
@@ -26,6 +29,7 @@ class colaP{ int tama;
 							}
 						 }
 						 elementos[aux] = dato;
+						 
 				 }				 				 
 				 posag++;		
 			 }
@@ -55,9 +59,16 @@ class colaP{ int tama;
 				elementos[aux2] =0;
 				posag--;
 			//	cout<<"posag actual: "<<posag<<endl;
-				
+				RefrescarLista();
 			 }
-             int* getElementos(){
+			 void RefrescarLista(){
+			 	cola.vaciar();
+			 	int i;
+			 	for(i=1; i<posag; i++){
+			 		cola.anadirFin(elementos[i]);
+				}
+			 }
+             T* getElementos(){
              	return elementos;
 			 }
 			 int getTam(){
@@ -65,5 +76,8 @@ class colaP{ int tama;
 			 }
              ~colaP(){
              	delete[] elementos;
+			 }
+			 Lista<T> getCola(){
+			 	return cola;
 			 }
       };
