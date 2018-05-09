@@ -7,8 +7,8 @@ struct candidato{
 	string sexo;
 	string estadoCivil;
 	string fechaNac;
-	string ciudadNac;
-	string ciudadRes;
+	int ciudadNac;
+	int ciudadRes;
 	int partido;
 	int tipoCandidato;
 	candidato* viceprecidente;
