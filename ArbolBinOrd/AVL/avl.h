@@ -161,27 +161,22 @@ class AVL{
 		}
 		
 		
-		void inorden(int raiz){
-			cout<<"sera?";
-			pila<int> pilo;
+		void inorden(int raiz){						
+			pila<T> pilo;
 			int aux = raiz;
-			
-			do{				
-				if(!pilo.PilaVacia() && aux==0){
-					cout<<"esto: "<<arbolitoBin[pilo.Top()].clave<<endl;
-					in.anadirFin(arbolitoBin[pilo.Top()].clave);
+			while (aux != 0){
+				pilo.Push(aux);
+				aux = arbolitoBin[aux].hijoIzq;
+			}				
+			int aux2 ;
+			while (!pilo.PilaVacia()){
+				aux2 = pilo.Pop();
+				in.anadirFin(arbolitoBin[aux2].clave);
+				if (arbolitoBin[aux2].hijoDer != 0){
+					inorden(arbolitoBin[aux2].hijoDer);
 				}
-				if(aux!= 0){
-					//	cout<<"añade: "<<arbolitoBin[aux].clave<<endl;
-						
-						//mostrar, guardar en la lista para eso 
-						pilo.Push(aux);
-						aux = arbolitoBin[aux].hijoIzq;
-					}else if(!pilo.PilaVacia()){
-						aux = pilo.Pop();						
-						aux = arbolitoBin[aux].hijoDer;
-					}	
-			}while(!pilo.PilaVacia() || aux != 0);										
+				
+			}										
 		}
 		
 		void preorden(int raiz){
