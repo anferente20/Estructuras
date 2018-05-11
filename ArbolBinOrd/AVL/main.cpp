@@ -4,10 +4,13 @@
 
 int main(int argc, char** argv) {
 	AVL<int> arbol;
-	arbol.insertarRaiz(90);
-	arbol.insertarElemento(138);
-	arbol.insertarElemento(100);
-
+	arbol.insertarRaiz(10);
+	arbol.insertarElemento(20);
+	arbol.insertarElemento(30);
+	arbol.insertarElemento(40);
+	arbol.insertarElemento(50);
+//	arbol.insertarElemento(60);
+//	arbol.insertarElemento(10);
 	arbol.mostrarInfo();
 	return 0;
 }

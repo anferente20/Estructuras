@@ -100,7 +100,7 @@ class AVL{
 				}
 		}
 		void insertarElemento(T numero){
-			int pos = 1, posAnt=1;
+			int pos = arbolitoBin[0].hijoIzq, posAnt=1;
 			int auxNum = arbolitoBin[0].hijoDer;
 			
 			arbolitoBin[0].hijoDer = arbolitoBin[auxNum].hijoDer;						
@@ -125,24 +125,74 @@ class AVL{
 			for(int i = 1;i<=tam;i++){
 				arbolitoBin[i].Fe = desequilibrio(arbolitoBin[i]);
 			}
-			for(int i = 1;i<=13;i++){
+			for(int i = tam;i>=1;i--){
 				if(arbolitoBin[i].Fe == 2){
 					if(arbolitoBin[arbolitoBin[i].hijoDer].Fe > 0){
-						//Rotacion sencilla a la izquierda
+						cout << "Simple izq" << endl;
+						rotacionSimpleIzquierda(i);
 					}
 					else{
-						//Rotción doble  a la izquierda
+						cout << "Doble izq" << endl;
+						rotacionDobleIzquierda(i);
 					}
 				}
 				else if(arbolitoBin[i].Fe == -2){
 					if(arbolitoBin[arbolitoBin[i].hijoIzq].Fe > 0){
-						//Rotacion doble a derecha
+						cout << "Doble  der" << endl;
+						rotacionDobleDerecha(i);
 					}
 					else{
-						//Rotción sencilla  a la derecha
+						cout << "Simple der" << endl;
+						rotacionSimpleDerecha(i);
 					}
 				}
 			}		
+		}
+		int max (int izq, int der){
+			if (izq>der){
+				return izq;
+			} else{
+				return der;
+			}
+		}
+		
+		int rotacionSimpleIzquierda(int rama){
+			int aux = arbolitoBin[rama].hijoDer;
+			arbolitoBin[rama].hijoDer = arbolitoBin[aux].hijoIzq;
+			arbolitoBin[aux].hijoIzq = rama;
+			if (arbolitoBin[rama].clave == arbolitoBin[arbolitoBin[0].hijoIzq].clave){
+				arbolitoBin[0].hijoIzq = aux;
+			} 
+			for(int i = 1;i<=tam;i++){
+				arbolitoBin[i].Fe = desequilibrio(arbolitoBin[i]);
+			}
+			return aux;
+		}
+		int rotacionSimpleDerecha(int rama){
+			int aux = arbolitoBin[rama].hijoIzq;
+			arbolitoBin[rama].hijoIzq = arbolitoBin[aux].hijoDer;
+			arbolitoBin[aux].hijoDer = rama;
+			if (arbolitoBin[rama].clave == arbolitoBin[arbolitoBin[0].hijoIzq].clave){
+				arbolitoBin[0].hijoIzq = aux;
+			}
+			for(int i = 1;i<=tam;i++){
+				arbolitoBin[i].Fe = desequilibrio(arbolitoBin[i]);
+			}
+
+			return aux;
+		}
+		
+		int rotacionDobleIzquierda(int rama){
+			int aux = rama;
+			arbolitoBin[aux].hijoDer =  rotacionSimpleDerecha(arbolitoBin[aux].hijoDer);
+			return rotacionSimpleIzquierda(aux);
+			
+		}
+		
+		int rotacionDobleDerecha(int rama){
+			int aux = rama;
+			arbolitoBin[aux].hijoIzq =  rotacionSimpleIzquierda(arbolitoBin[aux].hijoIzq);
+			return rotacionSimpleDerecha(aux);
 		}
 		
 		int getRaiz(){
