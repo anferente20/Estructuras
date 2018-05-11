@@ -13,15 +13,16 @@ struct arbolito{
 };
 template<class T>
 class AVL{
-	arbolito<T> arbolitoBin[14];      //ACA LO ARREGLE ANTES ESTABA EN 13 Y AHORA 14 CON ESO SE SOLUCIONA
+	arbolito<T> arbolitoBin[100];      //ACA LO ARREGLE ANTES ESTABA EN 13 Y AHORA 14 CON ESO SE SOLUCIONA
 	Lista<T> in;
 	Lista<T> pre;
 	Lista<T> pos;
+	pila<int> pilita;
 	int tam;
 	public:
 		
 		AVL(){
-			for (int i=0; i<13; i++){	
+			for (int i=0; i<99; i++){	
 				tam = 0;									//Inicializa los hijos derechos como la posición del elemento siguiente
 				arbolitoBin[i].hijoDer = i+1;
 				arbolitoBin[i].clave = 0;
@@ -30,7 +31,7 @@ class AVL{
 			}
 			arbolitoBin[0].clave = 0;
 			arbolitoBin[0].hijoIzq = 1; 									//Se refiere a la cabeza
-			arbolitoBin[13].hijoDer = 0;									
+			arbolitoBin[99].hijoDer = 0;									
 		}
 		
 		void insertarRaiz(T numero){							
@@ -104,7 +105,9 @@ class AVL{
 		int calcularFe(){
 			//Se asignan desequilibrios
 			for(int i = 1;i<=tam;i++){
-				arbolitoBin[i].Fe = desequilibrio(arbolitoBin[i]);
+				if(arbolitoBin[i].clave != 0){
+					arbolitoBin[i].Fe = desequilibrio(arbolitoBin[i]);
+				}
 			}
 		}
 		void insertarElemento(T numero){
@@ -132,49 +135,45 @@ class AVL{
 			
 			tam++;			
 			calcularFe();
-			int aux = getRaiz();
-			while(arbolitoBin[aux].Fe ==2 || arbolitoBin[aux].Fe==-2){
-				if(arbolitoBin[aux].Fe ==2){
-					pilo.Push(aux);
-					aux = arbolitoBin[aux].hijoDer;
-				}else{
-					pilo.Push(aux);
-					aux = arbolitoBin[aux].hijoIzq;	
+			int aux;
+			if(arbolitoBin[arbolitoBin[getRaiz()].hijoIzq].Fe == 2 || arbolitoBin[arbolitoBin[getRaiz()].hijoIzq].Fe == -2  )
+				aux = getRaiz();
+			else{
+				for(int i = 0; i<= tam; i++){
+					if(arbolitoBin[arbolitoBin[i].hijoIzq].Fe == 2 || arbolitoBin[arbolitoBin[i].hijoIzq].Fe == -2  )
+						aux = i;
 				}
+						
 			}
-			while(!pilo.PilaVacia()){
-				int aux = pilo.Pop();
+			preOrdenDesequilibrio(getRaiz());
+			
+			
+			while(!pilita.PilaVacia()){
+				int aux = pilita.Pop();
 				if(arbolitoBin[aux].Fe == 2){
 					
 					if(arbolitoBin[arbolitoBin[aux].hijoDer].Fe > 0){
-						cout << "Simple izq" << endl;
+
 						rotacionSimpleIzquierda(aux);
 					}
 					else{
-						cout << "Doble izq" << endl;
+
 						rotacionDobleIzquierda(aux);
 					}
 				}
-				else if(arbolitoBin[aux].Fe == -2){
+				if(arbolitoBin[aux].Fe == -2){
+
 					if(arbolitoBin[arbolitoBin[aux].hijoIzq].Fe > 0){
-						cout << "Doble  der" << endl;
+
 						rotacionDobleDerecha(aux);
 					}
 					else{
-						cout << "Simple der" << endl;
 						rotacionSimpleDerecha(aux);
 					}
 				}
 				calcularFe();
 			}
 			
-		}
-		int max (int izq, int der){
-			if (izq>der){
-				return izq;
-			} else{
-				return der;
-			}
 		}
 		
 		int rotacionSimpleIzquierda(int rama){
@@ -183,7 +182,6 @@ class AVL{
 				if(arbolitoBin[i].hijoIzq == rama || arbolitoBin[i].hijoDer == rama)
 					padre = i;
 			}			
-
 			int aux = arbolitoBin[rama].hijoDer;
 			arbolitoBin[rama].hijoDer = arbolitoBin[aux].hijoIzq;
 			arbolitoBin[aux].hijoIzq = rama;
@@ -198,17 +196,24 @@ class AVL{
 			return aux;
 		}
 		int rotacionSimpleDerecha(int rama){
+			int padre = 0;
+			for(int i = 1; i<=tam;i++){
+				if(arbolitoBin[i].hijoIzq == rama || arbolitoBin[i].hijoDer == rama)
+					padre = i;
+			}
 			int aux = arbolitoBin[rama].hijoIzq;
 			arbolitoBin[rama].hijoIzq = arbolitoBin[aux].hijoDer;
 			arbolitoBin[aux].hijoDer = rama;
 			if (arbolitoBin[rama].clave == arbolitoBin[arbolitoBin[0].hijoIzq].clave){
 				arbolitoBin[0].hijoIzq = aux;
 			}
-			for(int i = 1;i<=tam;i++){
-				arbolitoBin[i].Fe = desequilibrio(arbolitoBin[i]);
+			if(arbolitoBin[padre].hijoDer == rama){
+				arbolitoBin[padre].hijoDer = aux;
+			}else if(arbolitoBin[padre].hijoIzq == rama){
+				arbolitoBin[padre].hijoIzq = aux;
 			}
-
 			return aux;
+			
 		}
 		
 		int rotacionDobleIzquierda(int rama){
@@ -309,7 +314,25 @@ class AVL{
 			}while(aux!=0 || !pilo.PilaVacia());
 			*/				
 		}
-		
+		void preOrdenDesequilibrio(int raiz){
+			pila<T> pilo;
+			int aux = raiz;
+			do{
+				if(aux!= 0){
+				//	cout<<"añade: "<<arbolitoBin[aux].clave<<endl;
+					if (arbolitoBin[aux].Fe == 2 || arbolitoBin[aux].Fe == -2){
+						pilita.Push(aux);
+					}
+					//mostrar, guardar en la lista para eso 
+					pilo.Push(aux);
+					aux = arbolitoBin[aux].hijoIzq;
+				}else if(!pilo.PilaVacia()){
+					aux = pilo.Pop();
+					
+					aux = arbolitoBin[aux].hijoDer;
+				}
+			}while(!pilo.PilaVacia() || aux != 0);
+		}
 		Lista<T> getin(){
 			return in;
 		}
@@ -384,9 +407,9 @@ class AVL{
 				}
 				
 				if(arbolitoBin[hijo1].hijoDer != 0){
-					arbolitoBin[padre1].hijoIzq = arbolitoBin[hijo1].hijoDer;
-					arbolitoBin[hijo1].hijoDer = 0;
+					arbolitoBin[padre1].hijoDer = arbolitoBin[hijo1].hijoDer;
 				}
+			
 				//conectar padre con Hijo1
 				if (padre == 0){
 					//Caso raiz
@@ -403,6 +426,7 @@ class AVL{
 				//reemplazo hijo con hijo1
 				arbolitoBin[hijo1].hijoIzq = arbolitoBin[hijo].hijoIzq;
 				arbolitoBin[hijo1].hijoDer = arbolitoBin[hijo].hijoDer;
+			
 			}
 			
 			//Caso Razíz
@@ -415,24 +439,50 @@ class AVL{
 			arbolitoBin[hijo].hijoDer = arbolitoBin[0].hijoDer;
 			arbolitoBin[0].hijoDer = hijo;
 			
-		}
-		 bool pertenece(T valor){
-		 	bool aux = false;
-			for(int i =1;i<in.getTam();i++){
-				if(valor == in.devolverDato(i))
-					aux = true;
+			
+			calcularFe();
+			
+			if(arbolitoBin[arbolitoBin[getRaiz()].hijoIzq].Fe == 2 || arbolitoBin[arbolitoBin[getRaiz()].hijoIzq].Fe == -2  )
+				aux = getRaiz();
+			else{
+				for(int i = 0; i<= tam; i++){
+					if(arbolitoBin[arbolitoBin[i].hijoIzq].Fe == 2 || arbolitoBin[arbolitoBin[i].hijoIzq].Fe == -2  )
+						aux = i;
+				}
+						
 			}
-			return aux;
-		 }		
-		
-		string cortar(T valor){
-			string aux = "El elemento no pertenece al arbol.";
-			if(pertenece(valor) == true){
-				eliminar(valor);
-				aux = "Se elimino el elemento.";
+			preOrdenDesequilibrio(getRaiz());
+			
+			
+			while(!pilita.PilaVacia()){
+				 aux = pilita.Pop();
+				if(arbolitoBin[aux].Fe == 2){
+					
+					if(arbolitoBin[arbolitoBin[aux].hijoDer].Fe > 0){
+
+						rotacionSimpleIzquierda(aux);
+					}
+					else{
+	
+						rotacionDobleIzquierda(aux);
+					}
+				}
+				if(arbolitoBin[aux].Fe == -2){
+				
+					if(arbolitoBin[arbolitoBin[aux].hijoIzq].Fe > 0){
+					
+						rotacionDobleDerecha(aux);
+					}
+					else{
+					
+						rotacionSimpleDerecha(aux);
+					}
+				}
+				calcularFe();
 			}
-			return aux;
+			
 		}		
+		 	
 		
 		
 };
