@@ -145,8 +145,7 @@ class AVL{
 			while(!pilo.PilaVacia()){
 				int aux = pilo.Pop();
 				if(arbolitoBin[aux].Fe == 2){
-					cout<<arbolitoBin[aux].Fe<<endl;
-					cout<<aux<<endl;
+					
 					if(arbolitoBin[arbolitoBin[aux].hijoDer].Fe > 0){
 						cout << "Simple izq" << endl;
 						rotacionSimpleIzquierda(aux);
@@ -179,14 +178,22 @@ class AVL{
 		}
 		
 		int rotacionSimpleIzquierda(int rama){
+			int padre = 0;
+			for(int i = 1; i<=tam;i++){
+				if(arbolitoBin[i].hijoIzq == rama || arbolitoBin[i].hijoDer == rama)
+					padre = i;
+			}			
+
 			int aux = arbolitoBin[rama].hijoDer;
 			arbolitoBin[rama].hijoDer = arbolitoBin[aux].hijoIzq;
 			arbolitoBin[aux].hijoIzq = rama;
 			if (arbolitoBin[rama].clave == arbolitoBin[arbolitoBin[0].hijoIzq].clave){
 				arbolitoBin[0].hijoIzq = aux;
 			} 
-			for(int i = 1;i<=tam;i++){
-				arbolitoBin[i].Fe = desequilibrio(arbolitoBin[i]);
+			if(arbolitoBin[padre].hijoIzq == rama){
+				arbolitoBin[padre].hijoIzq = aux;
+			}else if(arbolitoBin[padre].hijoDer == rama){
+				arbolitoBin[padre].hijoDer = aux;
 			}
 			return aux;
 		}
