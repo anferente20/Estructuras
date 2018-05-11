@@ -8,6 +8,7 @@ struct arbolito{
 	T clave;
 	int hijoIzq;
 	int hijoDer;
+	int padre;
 	int Fe;
 };
 template<class T>
@@ -37,6 +38,7 @@ class AVL{
 			arbolitoBin[1].clave = numero;
 			arbolitoBin[1].hijoDer = 0;
 			arbolitoBin[1].hijoIzq = 0;
+			arbolitoBin[1].padre = 0;
 		}
 		
 		void vaciarListas(){
@@ -99,9 +101,16 @@ class AVL{
 					}
 				}
 		}
+		int calcularFe(){
+			//Se asignan desequilibrios
+			for(int i = 1;i<=tam;i++){
+				arbolitoBin[i].Fe = desequilibrio(arbolitoBin[i]);
+			}
+		}
 		void insertarElemento(T numero){
 			int pos = arbolitoBin[0].hijoIzq, posAnt=1;
 			int auxNum = arbolitoBin[0].hijoDer;
+			pila<int> pilo;
 			
 			arbolitoBin[0].hijoDer = arbolitoBin[auxNum].hijoDer;						
 			arbolitoBin[auxNum].clave = numero;
@@ -120,33 +129,46 @@ class AVL{
 			} else {
 				arbolitoBin[posAnt].hijoIzq = auxNum;
 			}
-			tam++;
-			//Se asignan desequilibrios
-			for(int i = 1;i<=tam;i++){
-				arbolitoBin[i].Fe = desequilibrio(arbolitoBin[i]);
+			
+			tam++;			
+			calcularFe();
+			int aux = getRaiz();
+			while(arbolitoBin[aux].Fe ==2 || arbolitoBin[aux].Fe==-2){
+				if(arbolitoBin[aux].Fe ==2){
+					pilo.Push(aux);
+					aux = arbolitoBin[aux].hijoDer;
+				}else{
+					pilo.Push(aux);
+					aux = arbolitoBin[aux].hijoIzq;	
+				}
 			}
-			for(int i = tam;i>=1;i--){
-				if(arbolitoBin[i].Fe == 2){
-					if(arbolitoBin[arbolitoBin[i].hijoDer].Fe > 0){
+			while(!pilo.PilaVacia()){
+				int aux = pilo.Pop();
+				if(arbolitoBin[aux].Fe == 2){
+					cout<<arbolitoBin[aux].Fe<<endl;
+					cout<<aux<<endl;
+					if(arbolitoBin[arbolitoBin[aux].hijoDer].Fe > 0){
 						cout << "Simple izq" << endl;
-						rotacionSimpleIzquierda(i);
+						rotacionSimpleIzquierda(aux);
 					}
 					else{
 						cout << "Doble izq" << endl;
-						rotacionDobleIzquierda(i);
+						rotacionDobleIzquierda(aux);
 					}
 				}
-				else if(arbolitoBin[i].Fe == -2){
-					if(arbolitoBin[arbolitoBin[i].hijoIzq].Fe > 0){
+				else if(arbolitoBin[aux].Fe == -2){
+					if(arbolitoBin[arbolitoBin[aux].hijoIzq].Fe > 0){
 						cout << "Doble  der" << endl;
-						rotacionDobleDerecha(i);
+						rotacionDobleDerecha(aux);
 					}
 					else{
 						cout << "Simple der" << endl;
-						rotacionSimpleDerecha(i);
+						rotacionSimpleDerecha(aux);
 					}
 				}
-			}		
+				calcularFe();
+			}
+			
 		}
 		int max (int izq, int der){
 			if (izq>der){
