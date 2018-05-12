@@ -1,0 +1,10 @@
+1 Centro-Demoniaco
+2 Cambio-Radical
+3 Partido-Conservador
+4 Partido-Liberal 
+5 Partido-Social-de-Unidad-Nacional
+6 Alianza-Verde
+7 Polo-Democratico-Alternativo
+8 Lista-de-la-Decencia
+9 MIRA
+10 Partido-Opcion-Ciudadana
