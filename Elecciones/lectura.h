@@ -70,11 +70,13 @@ class Lectura{
 				Lista<partido> parti;
 
 				ifstream archEntrada("archivos/partidos.txt", ios::in);   //lee el archivo para el modo lectura
-				
+												
+			
 				if (!archEntrada.good())    //verifica que el archivo este disponible para abrir
 				   {cerr << "No se pudo abrir el archivo trios" << endl;
 				    exit(1);}                //en caso de no poder abrir se cierra el programa
-				    								    
+				    
+				cout<<"que pasa?"<<endl;									    
 				 // lectura del archivo y creacion del arreglo   
 				while(!archEntrada.eof()){        //mientras haya algo que leer, hagale
 				   	archEntrada >> id;

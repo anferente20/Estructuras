@@ -8,9 +8,11 @@ int main(int argc, char** argv) {
 	candidatos can(lee.lecturaCandidatos());
 	candidato candi;
 	//creo partido
-	
-	
+		
 	cout<< lee.lecturaPartido().devolverDato(1).nombre;
+	
+	cout<<"llega aca?"<<endl;
+	
 	Partido part(can,lee.lecturaPartido());
 	Lista<candidato> cani = part.consultarC(6);
 	cout<<part.getPartido(6).nombre<<endl;
