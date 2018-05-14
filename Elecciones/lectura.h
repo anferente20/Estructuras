@@ -74,7 +74,7 @@ class Lectura{
 				if (!archEntrada.good())    //verifica que el archivo este disponible para abrir
 				   {cerr << "No se pudo abrir el archivo trios" << endl;
 				    exit(1);}                //en caso de no poder abrir se cierra el programa
-				    
+				    								    
 				 // lectura del archivo y creacion del arreglo   
 				while(!archEntrada.eof()){        //mientras haya algo que leer, hagale
 				   	archEntrada >> id;
@@ -83,6 +83,7 @@ class Lectura{
 				    p.nombre=nombre;
 					parti.anadirFin(p);
 				}
+				
 				archEntrada.close();		 	   
 				return parti;
 			}
