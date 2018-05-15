@@ -59,7 +59,7 @@ class Partido{
 			return partidos[partido].nombre;
 		}
 		
-		
+		//Obtiene los candidatos  de un partido
 		Lista<candidato> consultarC(int partido){
 			Lista<int> aux;
 			int auxp = 0;
@@ -75,6 +75,7 @@ class Partido{
 			return temp;
 		}
 		
+		//Obtiene todos los candidatos a presidencia
 		Lista<candidato> candidatosPresidencia(){
 			Lista<int> aux;
 			Lista<candidato> temp;
@@ -89,4 +90,25 @@ class Partido{
 			}
 			return temp;
 		}
-};
+		//Vacia las listas
+		void vaciar(){
+			for(int i = 0;i<=getTam();i++){
+				partidos[i].candidatos.vaciarListas();
+			}
+		}
+		//Metodo para modificar un candidato
+/*		void modificar(int clave, candidato c){
+			eliminar(clave);
+			int aux = c.partido;
+			can.getCandidatos().modificar(c,clave);	
+			cout<<aux<<endl;
+			anadirC(c);
+			cout<<partidos[aux].candidatos.getTam()<<endl;	
+		}
+		
+		//Eliminar candidato
+		void eliminar(int clave){
+			int aux = can.getCandidato(clave).partido;
+			partidos[aux].candidatos.eliminar(clave);
+		}
+*/};
