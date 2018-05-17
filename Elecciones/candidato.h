@@ -10,6 +10,7 @@ struct candidato{
 	string fechaNac;
 	int ciudadNac;
 	int ciudadRes;
+	int antCandCiudad;		//Es una multilista, guarda el id del anterior candidato de la misma ciudad
 	int partido;
 	int tipoCandidato;
 	int vicepresidente;
